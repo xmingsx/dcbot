@@ -79,7 +79,7 @@ async def gioi_thieu(interaction: discord.Interaction):
     )
 
     embed.add_field(
-        name="1 số lệnh bạn có thể sử dụng nè {MINORI} .",
+        name="1 số lệnh bạn có thể sử dụng nè {MINORI}",
         value=(
             f" /ping - Kiểm tra độ trễ của mình \n"
             f" /nhan_vat - Xem thông tin nhân vật\n"
