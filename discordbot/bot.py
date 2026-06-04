@@ -53,13 +53,13 @@ async def on_ready():
 
 @bot.tree.command(
     name="ping",
-    description="Kiểm tra độ trễ của bot"
+    description="Kiểm tra độ trễ của mình"
 )
 async def ping(interaction: discord.Interaction):
     latency = round(bot.latency * 1000)
 
     await interaction.response.send_message(
-        f"🏓 Pong!\nĐộ trễ: {latency}ms"
+        f"Hehehe \nĐộ trễ hiện tại là : {latency}ms nhóoo"
     )
 
 # =========================
@@ -68,13 +68,13 @@ async def ping(interaction: discord.Interaction):
 
 @bot.tree.command(
     name="gioi_thieu",
-    description="Giới thiệu về bot"
+    description="Giới thiệu về mình"
 )
 async def gioi_thieu(interaction: discord.Interaction):
 
     embed = discord.Embed(
-        title=f"{MINORI} Giới thiệu Bot",
-        description="Mina-san konichiwa!!! Mình là Minori Hanasato nèee~ 🌼",
+        title=f"{MINORI} Giới thiệu về mình",
+        description="Mina-san konichiwa! Mình là Minori Hanasato nèee!",
         color=0xF0B85A
     )
 
@@ -82,7 +82,7 @@ async def gioi_thieu(interaction: discord.Interaction):
         name=f"Một số lệnh bạn có thể sử dụng nè {MINORI}",
         value=(
             "• /ping - Kiểm tra độ trễ của mình\n"
-            "• /chao - Minori chào bạn\n"
+            "• /loi_chao - 1 Lời chào lúc thức dậy, nếu rảnh sẽ update chào random\n"
             "• /nhan_vat - Xem thông tin nhân vật\n"
             "• /gioi_thieu - Giới thiệu về mình"
         ),
@@ -102,16 +102,16 @@ async def gioi_thieu(interaction: discord.Interaction):
 # =========================
 
 @bot.tree.command(
-    name="chao",
-    description="Minori chào bạn"
+    name="loi_chao",
+    description="1 Lời chào lúc thức dậy, nếu rảnh sẽ update chào random"
 )
 async def chao(interaction: discord.Interaction):
 
     embed = discord.Embed(
-        title=f"{MINORI} Xin chào!",
+        title=f"{MINORI} Ô 2 Ô!",
         description=(
-            f"{MINORI} Mina-san konichiwaaa!\n"
-            "Rất vui được gặp bạn nè~ ✨"
+            "Ô ai vậy nè\n"
+            f"Dậy đi nào darling,trời sáng rồi nè {MINORI}"
         ),
         color=0xF0B85A
     )
