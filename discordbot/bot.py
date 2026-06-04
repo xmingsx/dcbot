@@ -35,6 +35,12 @@ MINORI = "<:Minori_Hehehe:1509935548863742002>"
 
 @bot.event
 async def on_ready():
+    await bot.change_presence(
+    status=discord.Status.idle,
+    activity=discord.CustomActivity(
+        "💖 Cố gắng lên nhé!"
+    )
+)
     try:
         synced = await bot.tree.sync()
         print(f"Đã đồng bộ {len(synced)} slash command.")
