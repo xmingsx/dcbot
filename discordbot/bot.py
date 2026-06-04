@@ -88,12 +88,6 @@ async def gioi_thieu(interaction: discord.Interaction):
         inline=False
     )
 
-    embed.add_field(
-        name="🛠️ Phiên bản",
-        value=f"discord.py 2.x",
-        inline=False
-    )
-
     embed.set_footer(
         text="Cảm ơn bạn đã đọc!"
     )
