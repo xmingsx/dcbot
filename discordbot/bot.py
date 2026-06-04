@@ -1,3 +1,4 @@
+```python
 import os
 import traceback
 import discord
@@ -22,6 +23,12 @@ bot = commands.Bot(
     command_prefix="?",
     intents=intents
 )
+
+# =========================
+# EMOJI
+# =========================
+
+MINORI = "<:Minori_Hehehe:1509935548863742002>"
 
 # =========================
 # KHI BOT KHỞI ĐỘNG
@@ -67,29 +74,29 @@ async def ping(interaction: discord.Interaction):
 async def gioi_thieu(interaction: discord.Interaction):
 
     embed = discord.Embed(
-        title="🤖 Giới thiệu Bot",
-        description="Bot Discord được xây dựng bằng discord.py và đang chạy trên Render.",
-        color=discord.Color.blue()
+        title=f"{MINORI} Giới thiệu Bot",
+        description=f" Mina-san konichiwa!!!, Mình là Minori Hánato nèee.",
+        color=discord.Color.pink()
     )
 
     embed.add_field(
         name="⚙️ Chức năng",
         value=(
-            "• /ping - Kiểm tra độ trễ\n"
-            "• /nhan_vat - Xem thông tin nhân vật\n"
-            "• /gioi_thieu - Xem thông tin bot"
+            f" /ping - Kiểm tra độ trễ của mình \n"
+            f" /nhan_vat - Xem thông tin nhân vật\n"
+            f" /gioi_thieu - Giới thiệu về mình"
         ),
         inline=False
     )
 
     embed.add_field(
         name="🛠️ Phiên bản",
-        value="discord.py 2.x",
+        value=f"discord.py 2.x",
         inline=False
     )
 
     embed.set_footer(
-        text="Cảm ơn bạn đã sử dụng bot!"
+        text="Cảm ơn bạn đã đọc!"
     )
 
     await interaction.response.send_message(
@@ -183,3 +190,4 @@ print("ĐANG KHỞI ĐỘNG DISCORD BOT")
 print("=" * 40)
 
 bot.run(TOKEN)
+```
