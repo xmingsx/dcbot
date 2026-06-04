@@ -75,7 +75,7 @@ async def gioi_thieu(interaction: discord.Interaction):
     embed = discord.Embed(
         title=f"{MINORI} Giới thiệu Bot",
         description=f" Mina-san konichiwa!!!, Mình là Minori Hanasato nèee.",
-        color=discord.Color.pink()
+        color=0xF0B85A
     )
 
     embed.add_field(
