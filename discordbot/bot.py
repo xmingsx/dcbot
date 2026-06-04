@@ -74,12 +74,12 @@ async def gioi_thieu(interaction: discord.Interaction):
 
     embed = discord.Embed(
         title=f"{MINORI} Giới thiệu Bot",
-        description=f" Mina-san konichiwa!!!, Mình là Minori Hanasato nèee.",
+        description="Mina-san konichiwa!!!, Mình là Minori Hanasato nèee.",
         color=0xF0B85A
     )
 
     embed.add_field(
-        name="1 số lệnh bạn có thể sử dụng nè {MINORI}",
+        name=f"1 số lệnh bạn có thể sử dụng nè {MINORI}",
         value=(
             f" /ping - Kiểm tra độ trễ của mình \n"
             f" /nhan_vat - Xem thông tin nhân vật\n"
