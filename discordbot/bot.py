@@ -57,6 +57,46 @@ async def ping(interaction: discord.Interaction):
     )
 
 # =========================
+# /GIOI_THIEU
+# =========================
+
+@bot.tree.command(
+    name="gioi_thieu",
+    description="Giới thiệu về bot"
+)
+async def gioi_thieu(interaction: discord.Interaction):
+
+    embed = discord.Embed(
+        title="🤖 Giới thiệu Bot",
+        description="Bot Discord được xây dựng bằng discord.py và đang chạy trên Render.",
+        color=discord.Color.blue()
+    )
+
+    embed.add_field(
+        name="⚙️ Chức năng",
+        value=(
+            "• /ping - Kiểm tra độ trễ\n"
+            "• /nhan_vat - Xem thông tin nhân vật\n"
+            "• /gioi_thieu - Xem thông tin bot"
+        ),
+        inline=False
+    )
+
+    embed.add_field(
+        name="🛠️ Phiên bản",
+        value="discord.py 2.x",
+        inline=False
+    )
+
+    embed.set_footer(
+        text="Cảm ơn bạn đã sử dụng bot!"
+    )
+
+    await interaction.response.send_message(
+        embed=embed
+    )
+
+# =========================
 # /NHAN_VAT
 # =========================
 
