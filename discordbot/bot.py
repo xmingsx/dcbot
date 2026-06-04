@@ -74,22 +74,55 @@ async def gioi_thieu(interaction: discord.Interaction):
 
     embed = discord.Embed(
         title=f"{MINORI} Giới thiệu Bot",
-        description="Mina-san konichiwa!!!, Mình là Minori Hanasato nèee.",
+        description="Mina-san konichiwa!!! Mình là Minori Hanasato nèee~ 🌼",
         color=0xF0B85A
     )
 
     embed.add_field(
-        name=f"1 số lệnh bạn có thể sử dụng nè {MINORI}",
+        name=f"Một số lệnh bạn có thể sử dụng nè {MINORI}",
         value=(
-            f" /ping - Kiểm tra độ trễ của mình \n"
-            f" /nhan_vat - Xem thông tin nhân vật\n"
-            f" /gioi_thieu - Giới thiệu về mình"
+            "• /ping - Kiểm tra độ trễ của mình\n"
+            "• /chao - Minori chào bạn\n"
+            "• /nhan_vat - Xem thông tin nhân vật\n"
+            "• /gioi_thieu - Giới thiệu về mình"
         ),
         inline=False
     )
 
     embed.set_footer(
-        text="Cảm ơn bạn đã đọc!"
+        text="Cảm ơn bạn đã sử dụng Minori Bot!"
+    )
+
+    await interaction.response.send_message(
+        embed=embed
+    )
+
+# =========================
+# /CHAO
+# =========================
+
+@bot.tree.command(
+    name="chao",
+    description="Minori chào bạn"
+)
+async def chao(interaction: discord.Interaction):
+
+    embed = discord.Embed(
+        title=f"{MINORI} Xin chào!",
+        description=(
+            f"{MINORI} Mina-san konichiwaaa!\n"
+            "Rất vui được gặp bạn nè~ ✨"
+        ),
+        color=0xF0B85A
+    )
+
+    embed.add_field(
+        name="🌼 Lời nhắn từ Minori",
+        value=(
+            "Hôm nay hãy cố gắng hết sức nhé!\n"
+            "Mình sẽ luôn cổ vũ bạn! 💖"
+        ),
+        inline=False
     )
 
     await interaction.response.send_message(
