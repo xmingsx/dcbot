@@ -1,4 +1,3 @@
-```python
 import os
 import traceback
 import discord
@@ -190,4 +189,3 @@ print("ĐANG KHỞI ĐỘNG DISCORD BOT")
 print("=" * 40)
 
 bot.run(TOKEN)
-```
