@@ -35,12 +35,14 @@ MINORI = "<:Minori_Hehehe:1509935548863742002>"
 
 @bot.event
 async def on_ready():
+
     await bot.change_presence(
-    status=discord.Status.idle,
-    activity=discord.CustomActivity(
-        "💖 Cố gắng lên nhé!"
+        status=discord.Status.idle,
+        activity=discord.CustomActivity(
+            "💖 Cố gắng lên nhé!"
+        )
     )
-)
+
     try:
         synced = await bot.tree.sync()
         print(f"Đã đồng bộ {len(synced)} slash command.")
@@ -53,6 +55,12 @@ async def on_ready():
     print(f"ID bot: {bot.user.id}")
     print("=" * 40)
 
+    print("DANH SÁCH SERVER:")
+    for guild in bot.guilds:
+        print(f"{guild.name} | ID: {guild.id}")
+
+    print("=" * 40)
+
 # =========================
 # /PING
 # =========================
@@ -62,10 +70,11 @@ async def on_ready():
     description="Kiểm tra độ trễ của mình"
 )
 async def ping(interaction: discord.Interaction):
+
     latency = round(bot.latency * 1000)
 
     await interaction.response.send_message(
-        f"Hehehe \nĐộ trễ hiện tại là : {latency}ms nhóoo"
+        f"Hehehe\nĐộ trễ hiện tại là: {latency}ms nhóoo"
     )
 
 # =========================
@@ -88,7 +97,7 @@ async def gioi_thieu(interaction: discord.Interaction):
         name=f"Một số lệnh bạn có thể sử dụng nè {MINORI}",
         value=(
             "• /ping - Kiểm tra độ trễ của mình\n"
-            "• /loi_chao - 1 Lời chào lúc thức dậy, nếu rảnh sẽ update chào random\n"
+            "• /loi_chao - Lời chào từ Minori\n"
             "• /nhan_vat - Xem thông tin nhân vật\n"
             "• /gioi_thieu - Giới thiệu về mình"
         ),
@@ -104,7 +113,7 @@ async def gioi_thieu(interaction: discord.Interaction):
     )
 
 # =========================
-# /CHAO
+# /LOI_CHAO
 # =========================
 
 @bot.tree.command(
@@ -117,7 +126,7 @@ async def chao(interaction: discord.Interaction):
         title=f"{MINORI} Ô 2 Ô!",
         description=(
             "Ô ai vậy nè\n"
-            f"Dậy đi nào darling,trời sáng rồi nè {MINORI}"
+            f"Dậy đi nào darling, trời sáng rồi nè {MINORI}"
         ),
         color=0xF0B85A
     )
@@ -171,6 +180,7 @@ async def nhan_vat(
     interaction: discord.Interaction,
     nhan_vat: app_commands.Choice[str]
 ):
+
     data = {
         "minori": "🌼 Minori Hanasato là học sinh năm hai tại Miyamasuzaka. Thành viên MORE MORE JUMP!",
         "haruka": "🐧 Haruka Kiritani là học sinh năm hai tại Miyamasuzaka. Thành viên MORE MORE JUMP!",
@@ -195,7 +205,9 @@ async def on_error(
     interaction: discord.Interaction,
     error: app_commands.AppCommandError
 ):
+
     print("\n===== ERROR =====")
+
     traceback.print_exception(
         type(error),
         error,
