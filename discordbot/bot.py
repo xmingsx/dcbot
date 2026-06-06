@@ -53,9 +53,11 @@ async def on_ready():
     print("BOT ĐÃ SẴN SÀNG")
     print(f"Tên bot: {bot.user}")
     print(f"ID bot: {bot.user.id}")
+    print(f"Đang ở {len(bot.guilds)} máy chủ")
     print("=" * 40)
 
     print("DANH SÁCH SERVER:")
+
     for guild in bot.guilds:
         print(f"{guild.name} | ID: {guild.id}")
 
