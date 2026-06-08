@@ -39,7 +39,7 @@ async def on_ready():
     await bot.change_presence(
         status=discord.Status.idle,
         activity=discord.CustomActivity(
-            "💖 Cố gắng lên nhé!"
+            "💖 Sắp thi rồi, cố gắng hết mình nhé!"
         )
     )
 
@@ -76,7 +76,7 @@ async def ping(interaction: discord.Interaction):
     latency = round(bot.latency * 1000)
 
     await interaction.response.send_message(
-        f"Hehehe\nĐộ trễ hiện tại là: {latency}ms nhóoo"
+        f"{MINORI}\nĐộ trễ hiện tại là: {latency}ms nhóoo"
     )
 
 # =========================
