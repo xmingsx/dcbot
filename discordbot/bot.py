@@ -205,26 +205,26 @@ async def gioi_thieu(interaction: discord.Interaction):
     )
 
     embed.add_field(
-    name="🤖 Lệnh Bot",
-    value=(
-        "• /ping\n"
-        "• /loi_chao\n"
-        "• /loi_chuc_thi_thpt\n"
-        "• /nhan_vat\n"
-        "• /gioi_thieu"
-    ),
-    inline=False
-)
+        name="🤖 Lệnh Bot",
+        value=(
+            "• /ping\n"
+            "• /loi_chao\n"
+            "• /loi_chuc_thi_thpt\n"
+            "• /nhan_vat\n"
+            "• /gioi_thieu"
+        ),
+        inline=False
+    )
 
-embed.add_field(
-    name="🎮 Lệnh Game",
-    value=(
-        "• /profile\n"
-        "• /daily\n"
-        "• /play_solo"
-    ),
-    inline=False
-)
+    embed.add_field(
+        name="🎮 Lệnh Game",
+        value=(
+            "• /profile\n"
+            "• /daily\n"
+            "• /play_solo"
+        ),
+        inline=False
+    )
 
     embed.set_thumbnail(
         url=CHARACTERS["minori"]["image"]
