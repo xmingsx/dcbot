@@ -131,13 +131,13 @@ def get_user(user_id):
     user_id = str(user_id)
 
     if user_id not in users:
-        users[user_id] = {
-    "gems": 0,
-    "daily": "",
-    "solo_count": 0,
-    "clear_count": 0,
-    "fail_count": 0
-}
+    users[user_id] = {
+        "gems": 0,
+        "daily": "",
+        "solo_count": 0,
+        "clear_count": 0,
+        "fail_count": 0
+    }
 
         save_users(users)
 
