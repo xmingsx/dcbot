@@ -451,7 +451,6 @@ async def play_solo(
 ):
 
     users = get_user(interaction.user.id)
-
     user = users[str(interaction.user.id)]
 
     level = SONGS[song.value]["levels"][difficulty.value]
@@ -471,19 +470,18 @@ async def play_solo(
 
     if is_clear:
 
-    user["clear_count"] += 1
+        user["clear_count"] += 1
+        user["gems"] += reward
 
-    user["gems"] += reward
-
-    embed = discord.Embed(
-        title="🎵 Solo Live - CLEAR",
-        description=(
-            f"Bạn đã hoàn thành "
-            f"**{song.name}** "
-            f"({difficulty.name})"
-        ),
-        color=0x57F287
-    )
+        embed = discord.Embed(
+            title="🎵 Solo Live - CLEAR",
+            description=(
+                f"Bạn đã hoàn thành "
+                f"**{song.name}** "
+                f"({difficulty.name})"
+            ),
+            color=0x57F287
+        )
 
         embed.add_field(
             name="💎 Đá nhận được",
@@ -501,6 +499,8 @@ async def play_solo(
             0,
             user["gems"] - lost
         )
+
+        user["fail_count"] += 1
 
         embed = discord.Embed(
             title="💀 Solo Live - FAILED",
