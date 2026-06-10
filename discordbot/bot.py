@@ -489,7 +489,7 @@ async def play_solo(
             inline=True
         )
 
-    else:
+else:
 
     user["fail_count"] += 1
 
@@ -502,13 +502,7 @@ async def play_solo(
         ),
         color=0xED4245
     )
-
-    embed.add_field(
-        name="💖 An ủi",
-        value="Bạn không bị mất đá nào!",
-        inline=False
-    )
-
+    
     user["solo_count"] += 1
 
     save_users(users)
