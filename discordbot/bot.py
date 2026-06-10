@@ -161,7 +161,7 @@ async def on_ready():
     await bot.change_presence(
         status=discord.Status.idle,
         activity=discord.CustomActivity(
-            "💖 Sắp thi rồi, cố gắng hết mình nhé!"
+            "💖 Sáng nay thi Ngữ Văn, Hãy cố hết sức mình, viết ra những câu từ bay bổng trên bằng chính đôi tay của mình nào!"
         )
     )
 
