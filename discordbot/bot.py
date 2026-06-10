@@ -317,6 +317,40 @@ async def nhan_vat(
     )
 
 # =========================
+# /PROFILE
+# =========================
+
+@bot.tree.command(
+    name="profile",
+    description="Xem hồ sơ của bạn"
+)
+async def profile(interaction: discord.Interaction):
+
+    users = get_user(interaction.user.id)
+
+    user = users[str(interaction.user.id)]
+
+    embed = discord.Embed(
+        title=f"📖 Hồ sơ của {interaction.user.display_name}",
+        color=0xF0B85A
+    )
+
+    embed.add_field(
+        name="💎 Đá",
+        value=user["gems"],
+        inline=False
+    )
+
+    embed.add_field(
+        name="🎵 Solo đã chơi",
+        value=user["solo_count"],
+        inline=False
+    )
+
+    await interaction.response.send_message(
+        embed=embed
+    )
+# =========================
 # BẮT LỖI
 # =========================
 
