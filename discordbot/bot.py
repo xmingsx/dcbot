@@ -491,38 +491,23 @@ async def play_solo(
 
     else:
 
-        percent = random.uniform(3.67, 36.7)
+    user["fail_count"] += 1
 
-        lost = int(user["gems"] * percent / 100)
+    embed = discord.Embed(
+        title="💀 Solo Live - FAILED",
+        description=(
+            f"Bạn đã thất bại ở "
+            f"**{song.name}** "
+            f"({difficulty.name})"
+        ),
+        color=0xED4245
+    )
 
-        user["gems"] = max(
-            0,
-            user["gems"] - lost
-        )
-
-        user["fail_count"] += 1
-
-        embed = discord.Embed(
-            title="💀 Solo Live - FAILED",
-            description=(
-                f"Bạn đã thất bại ở "
-                f"**{song.name}** "
-                f"({difficulty.name})"
-            ),
-            color=0xED4245
-        )
-
-        embed.add_field(
-            name="💎 Đá bị mất",
-            value=f"-{lost}",
-            inline=True
-        )
-
-        embed.add_field(
-            name="📉 Tỉ lệ mất",
-            value=f"{percent:.2f}%",
-            inline=True
-        )
+    embed.add_field(
+        name="💖 An ủi",
+        value="Bạn không bị mất đá nào!",
+        inline=False
+    )
 
     user["solo_count"] += 1
 
