@@ -359,6 +359,19 @@ async def profile(interaction: discord.Interaction):
 
     user = users[str(interaction.user.id)]
 
+    total = (
+        user["clear_count"] +
+        user["fail_count"]
+    )
+
+    if total > 0:
+        clear_rate = round(
+            user["clear_count"] / total * 100,
+            2
+        )
+    else:
+        clear_rate = 0
+
     embed = discord.Embed(
         title=f"📖 Hồ sơ của {interaction.user.display_name}",
         color=0xF0B85A
@@ -366,14 +379,36 @@ async def profile(interaction: discord.Interaction):
 
     embed.add_field(
         name="💎 Đá",
-        value=user["gems"],
+        value=str(user["gems"]),
         inline=False
     )
 
     embed.add_field(
         name="🎵 Solo đã chơi",
-        value=user["solo_count"],
+        value=str(user["solo_count"]),
+        inline=True
+    )
+
+    embed.add_field(
+        name="✅ Clear",
+        value=str(user["clear_count"]),
+        inline=True
+    )
+
+    embed.add_field(
+        name="❌ Fail",
+        value=str(user["fail_count"]),
+        inline=True
+    )
+
+    embed.add_field(
+        name="🏆 Tỉ lệ Clear",
+        value=f"{clear_rate}%",
         inline=False
+    )
+
+    embed.set_footer(
+        text="Minori luôn cổ vũ bạn! 💖"
     )
 
     await interaction.response.send_message(
