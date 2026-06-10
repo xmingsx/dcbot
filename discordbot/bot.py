@@ -444,39 +444,86 @@ async def play_solo(
 
     user = users[str(interaction.user.id)]
 
-    level = SONGS[song.value][difficulty.value]
+    level = SONGS[song.value]["levels"][difficulty.value]
 
-    reward = level * 10
+    rewards = {
+        "easy": 10,
+        "normal": 20,
+        "hard": 30,
+        "expert": 40,
+        "master": 50,
+        "append": 50
+    }
 
-    user["gems"] += reward
+    reward = rewards[difficulty.value]
+
+    is_clear = random.random() < 0.763
+
+    if is_clear:
+
+        user["gems"] += reward
+
+        embed = discord.Embed(
+            title="🎵 Solo Live - CLEAR",
+            description=(
+                f"Bạn đã hoàn thành "
+                f"**{song.name}** "
+                f"({difficulty.name})"
+            ),
+            color=0x57F287
+        )
+
+        embed.add_field(
+            name="💎 Đá nhận được",
+            value=f"+{reward}",
+            inline=True
+        )
+
+    else:
+
+        percent = random.uniform(3.67, 36.7)
+
+        lost = int(user["gems"] * percent / 100)
+
+        user["gems"] = max(
+            0,
+            user["gems"] - lost
+        )
+
+        embed = discord.Embed(
+            title="💀 Solo Live - FAILED",
+            description=(
+                f"Bạn đã thất bại ở "
+                f"**{song.name}** "
+                f"({difficulty.name})"
+            ),
+            color=0xED4245
+        )
+
+        embed.add_field(
+            name="💎 Đá bị mất",
+            value=f"-{lost}",
+            inline=True
+        )
+
+        embed.add_field(
+            name="📉 Tỉ lệ mất",
+            value=f"{percent:.2f}%",
+            inline=True
+        )
+
     user["solo_count"] += 1
 
     save_users(users)
 
-    embed = discord.Embed(
-        title="🎵 Solo Live",
-        description=(
-            f"Bạn đã hoàn thành "
-            f"**{song.name}** "
-            f"({difficulty.name})"
-        ),
-        color=0xF0B85A
-    )
-
     embed.add_field(
         name="📈 Độ khó",
         value=str(level),
-        inline=True
+        inline=False
     )
 
     embed.add_field(
-        name="💎 Đá nhận được",
-        value=str(reward),
-        inline=True
-    )
-
-    embed.add_field(
-        name="💖 Tổng đá",
+        name="💖 Tổng đá hiện tại",
         value=str(user["gems"]),
         inline=False
     )
