@@ -90,6 +90,24 @@ CHARACTERS = {
 }
 
 # =========================
+# DỮ LIỆU BÀI HÁT
+# =========================
+
+SONGS = {
+    "tell_your_world": {
+        "name": "Tell Your World",
+        "levels": {
+            "easy": 5,
+            "normal": 10,
+            "hard": 16,
+            "expert": 22,
+            "master": 26,
+            "append": 25
+        }
+    }
+}
+
+# =========================
 # USER DATA
 # =========================
 
