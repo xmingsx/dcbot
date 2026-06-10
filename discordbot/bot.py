@@ -194,7 +194,8 @@ async def gioi_thieu(interaction: discord.Interaction):
         "• /loi_chuc_thi_thpt\n"
         "• /nhan_vat\n"
         "• /profile\n"
-        "• /gioi_thieu"
+        "• /gioi_thieu\n"
+        "• /daily"
     ),
     inline=False
 )
@@ -350,6 +351,47 @@ async def profile(interaction: discord.Interaction):
     await interaction.response.send_message(
         embed=embed
     )
+
+# =========================
+# /DAILY
+# =========================
+
+@bot.tree.command(
+    name="daily",
+    description="Nhận đá hằng ngày"
+)
+async def daily(interaction: discord.Interaction):
+
+    users = get_user(interaction.user.id)
+
+    uid = str(interaction.user.id)
+
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    if users[uid]["daily"] == today:
+
+        await interaction.response.send_message(
+            "❌ Hôm nay bạn đã nhận Daily rồi!"
+        )
+        return
+
+    gems = random.randint(367, 3670)
+
+    users[uid]["gems"] += gems
+    users[uid]["daily"] = today
+
+    save_users(users)
+
+    embed = discord.Embed(
+        title="🎁 Daily Reward",
+        description=f"Bạn nhận được **{gems} 💎**",
+        color=0xF0B85A
+    )
+
+    await interaction.response.send_message(
+        embed=embed
+    )
+
 # =========================
 # BẮT LỖI
 # =========================
