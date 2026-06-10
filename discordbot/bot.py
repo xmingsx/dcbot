@@ -303,7 +303,7 @@ async def loi_chuc_thi_cu(interaction: discord.Interaction):
     ]
 
     embed = discord.Embed(
-        title="🎓 Lời chúc thi THPT",
+        title="🎓 Lời chúc thi cử",
         description=random.choice(messages),
         color=0xF0B85A
     )
