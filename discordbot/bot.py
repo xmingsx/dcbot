@@ -338,7 +338,7 @@ async def nhan_vat(
     )
 
     embed.set_footer(
-        text="Infomation by Project Sekai Wiki"
+        text="Information by Project Sekai Wiki"
     )
 
     await interaction.response.send_message(
