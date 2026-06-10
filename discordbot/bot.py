@@ -411,6 +411,81 @@ async def daily(interaction: discord.Interaction):
     )
 
 # =========================
+# /PLAY_SOLO
+# =========================
+
+@bot.tree.command(
+    name="play_solo",
+    description="Chơi Solo Live để nhận đá"
+)
+@app_commands.choices(
+    song=[
+        app_commands.Choice(
+            name="Tell Your World",
+            value="tell_your_world"
+        )
+    ],
+    difficulty=[
+        app_commands.Choice(name="Easy", value="easy"),
+        app_commands.Choice(name="Normal", value="normal"),
+        app_commands.Choice(name="Hard", value="hard"),
+        app_commands.Choice(name="Expert", value="expert"),
+        app_commands.Choice(name="Master", value="master"),
+        app_commands.Choice(name="Append", value="append")
+    ]
+)
+async def play_solo(
+    interaction: discord.Interaction,
+    song: app_commands.Choice[str],
+    difficulty: app_commands.Choice[str]
+):
+
+    users = get_user(interaction.user.id)
+
+    user = users[str(interaction.user.id)]
+
+    level = SONGS[song.value][difficulty.value]
+
+    reward = level * 10
+
+    user["gems"] += reward
+    user["solo_count"] += 1
+
+    save_users(users)
+
+    embed = discord.Embed(
+        title="🎵 Solo Live",
+        description=(
+            f"Bạn đã hoàn thành "
+            f"**{song.name}** "
+            f"({difficulty.name})"
+        ),
+        color=0xF0B85A
+    )
+
+    embed.add_field(
+        name="📈 Độ khó",
+        value=str(level),
+        inline=True
+    )
+
+    embed.add_field(
+        name="💎 Đá nhận được",
+        value=str(reward),
+        inline=True
+    )
+
+    embed.add_field(
+        name="💖 Tổng đá",
+        value=str(user["gems"]),
+        inline=False
+    )
+
+    await interaction.response.send_message(
+        embed=embed
+    )
+    
+# =========================
 # BẮT LỖI
 # =========================
 
