@@ -117,12 +117,19 @@ def load_users():
     try:
         with open(USER_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
-    except:
+    except Exception:
         return {}
+
 
 def save_users(data):
     with open(USER_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
+        json.dump(
+            data,
+            f,
+            indent=4,
+            ensure_ascii=False
+        )
+
 
 def get_user(user_id):
 
@@ -131,17 +138,19 @@ def get_user(user_id):
     user_id = str(user_id)
 
     if user_id not in users:
-    users[user_id] = {
-        "gems": 0,
-        "daily": "",
-        "solo_count": 0,
-        "clear_count": 0,
-        "fail_count": 0
-    }
+
+        users[user_id] = {
+            "gems": 0,
+            "daily": "",
+            "solo_count": 0,
+            "clear_count": 0,
+            "fail_count": 0
+        }
 
         save_users(users)
 
     return users
+
 # =========================
 # KHI BOT KHỞI ĐỘNG
 # =========================
