@@ -96,13 +96,32 @@ CHARACTERS = {
 USER_FILE = "users.json"
 
 def load_users():
-    ...
+    try:
+        with open(USER_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return {}
 
 def save_users(data):
-    ...
+    with open(USER_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
 def get_user(user_id):
-    ...
+
+    users = load_users()
+
+    user_id = str(user_id)
+
+    if user_id not in users:
+        users[user_id] = {
+            "gems": 0,
+            "daily": "",
+            "solo_count": 0
+        }
+
+        save_users(users)
+
+    return users
 # =========================
 # KHI BOT KHỞI ĐỘNG
 # =========================
