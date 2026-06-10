@@ -471,7 +471,9 @@ async def play_solo(
 
     if is_clear:
 
-        user["gems"] += reward
+    user["clear_count"] += 1
+
+    user["gems"] += reward
 
         embed = discord.Embed(
             title="🎵 Solo Live - CLEAR",
