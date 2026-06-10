@@ -155,16 +155,17 @@ async def gioi_thieu(interaction: discord.Interaction):
     )
 
     embed.add_field(
-        name="📖 Các lệnh hiện có",
-        value=(
-            "• /ping\n"
-            "• /loi_chao\n"
-            "• /loi_chuc_thi_thpt\n"
-            "• /nhan_vat\n"
-            "• /gioi_thieu"
-        ),
-        inline=False
-    )
+    name="📖 Các lệnh hiện có",
+    value=(
+        "• /ping\n"
+        "• /loi_chao\n"
+        "• /loi_chuc_thi_thpt\n"
+        "• /nhan_vat\n"
+        "• /profile\n"
+        "• /gioi_thieu"
+    ),
+    inline=False
+)
 
     embed.set_thumbnail(
         url=CHARACTERS["minori"]["image"]
