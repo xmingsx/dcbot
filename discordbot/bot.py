@@ -475,15 +475,15 @@ async def play_solo(
 
     user["gems"] += reward
 
-        embed = discord.Embed(
-            title="🎵 Solo Live - CLEAR",
-            description=(
-                f"Bạn đã hoàn thành "
-                f"**{song.name}** "
-                f"({difficulty.name})"
-            ),
-            color=0x57F287
-        )
+    embed = discord.Embed(
+        title="🎵 Solo Live - CLEAR",
+        description=(
+            f"Bạn đã hoàn thành "
+            f"**{song.name}** "
+            f"({difficulty.name})"
+        ),
+        color=0x57F287
+    )
 
         embed.add_field(
             name="💎 Đá nhận được",
