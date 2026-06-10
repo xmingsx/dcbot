@@ -91,6 +91,20 @@ CHARACTERS = {
 }
 
 # =========================
+# USER DATA
+# =========================
+
+USER_FILE = "users.json"
+
+def load_users():
+    ...
+
+def save_users(data):
+    ...
+
+def get_user(user_id):
+    ...
+# =========================
 # KHI BOT KHỞI ĐỘNG
 # =========================
 
