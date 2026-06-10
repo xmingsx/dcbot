@@ -2,54 +2,98 @@ import os
 import random
 import traceback
 import discord
-import json
 
 from datetime import datetime
 from discord.ext import commands
 from discord import app_commands
 
 from keep_alive import keep_alive
+from database import init_db
+
+import sqlite3
+
+# =========================
+# INIT
+# =========================
 
 keep_alive()
-
-# =========================
-# BOT CONFIG
-# =========================
+init_db()
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="?", intents=intents)
 
 MINORI = "<:Minori_Hehehe:1509935548863742002>"
 
+DB_NAME = "bot.db"
+
 # =========================
-# CHARACTERS
+# DATABASE FUNCTIONS
+# =========================
+
+def get_user(user_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    uid = str(user_id)
+
+    c.execute("SELECT * FROM users WHERE user_id = ?", (uid,))
+    data = c.fetchone()
+
+    if data is None:
+        c.execute("""
+        INSERT INTO users (user_id)
+        VALUES (?)
+        """, (uid,))
+        conn.commit()
+
+        c.execute("SELECT * FROM users WHERE user_id = ?", (uid,))
+        data = c.fetchone()
+
+    conn.close()
+
+    return {
+        "user_id": data[0],
+        "gems": data[1],
+        "daily": data[2],
+        "solo_count": data[3],
+        "clear_count": data[4],
+        "fail_count": data[5],
+    }
+
+
+def update_user(user):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("""
+    UPDATE users
+    SET gems = ?,
+        daily = ?,
+        solo_count = ?,
+        clear_count = ?,
+        fail_count = ?
+    WHERE user_id = ?
+    """, (
+        user["gems"],
+        user["daily"],
+        user["solo_count"],
+        user["clear_count"],
+        user["fail_count"],
+        user["user_id"]
+    ))
+
+    conn.commit()
+    conn.close()
+
+# =========================
+# DATA
 # =========================
 
 CHARACTERS = {
     "minori": {
-        "name": "🌼 Minori Hanasato",
-        "info": "Học sinh năm hai...\nThành viên MORE MORE JUMP!",
+        "name": "🌼 Minori",
+        "info": "Idol MORE MORE JUMP!",
         "image": "https://static.wikia.nocookie.net/projectsekai/images/d/d0/Happy_Birthday%21%21_2025_%28Minori%29.png"
-    },
-    "haruka": {
-        "name": "🐧 Haruka Kiritani",
-        "info": "Idol cũ, thành viên MORE MORE JUMP!",
-        "image": "https://static.wikia.nocookie.net/projectsekai/images/d/dc/Happy_Birthday%21%21_2024_%28Haruka%29.png"
-    },
-    "airi": {
-        "name": "🍑 Airi Momoi",
-        "info": "Năng động và vui vẻ",
-        "image": "https://static.wikia.nocookie.net/projectsekai/images/7/70/Happy_Birthday%21%21_2025_%28Airi%29.png"
-    },
-    "hinomori": {
-        "name": "💧 Shizuku Hinomori",
-        "info": "Người chị dịu dàng",
-        "image": "https://static.wikia.nocookie.net/projectsekai/images/3/39/Happy_Birthday%21%21_2024_%28Shizuku%29.png"
-    },
-    "saki": {
-        "name": "⭐ Saki Tenma",
-        "info": "Luôn vui vẻ",
-        "image": "https://static.wikia.nocookie.net/projectsekai/images/e/e8/Happy_Birthday%21%21_2025_%28Saki%29.png"
     }
 }
 
@@ -68,62 +112,13 @@ SONGS = {
 }
 
 # =========================
-# USER SYSTEM FIXED
-# =========================
-
-USER_FILE = "users.json"
-
-
-def load_users():
-    try:
-        with open(USER_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except:
-        return {}
-
-
-def save_users(data):
-    with open(USER_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
-
-
-# ✅ FIX: return user + database
-def get_user(user_id):
-    users = load_users()
-    uid = str(user_id)
-
-    if uid not in users:
-        users[uid] = {
-            "gems": 0,
-            "daily": "",
-            "solo_count": 0,
-            "clear_count": 0,
-            "fail_count": 0
-        }
-        save_users(users)
-
-    return users[uid], users
-
-
-# =========================
-# READY EVENT
+# READY
 # =========================
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(
-        status=discord.Status.idle,
-        activity=discord.CustomActivity("💖 Sắp thi rồi, cố gắng nhé!")
-    )
-
-    try:
-        synced = await bot.tree.sync()
-        print(f"Synced {len(synced)} commands")
-    except Exception as e:
-        print("Sync error:", e)
-
-    print(f"Bot ready: {bot.user}")
-
+    await bot.tree.sync()
+    print("Bot ready:", bot.user)
 
 # =========================
 # PING
@@ -132,61 +127,20 @@ async def on_ready():
 @bot.tree.command(name="ping")
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message(
-        f"{MINORI} Ping: {round(bot.latency * 1000)}ms"
+        f"{MINORI} {round(bot.latency * 1000)}ms"
     )
 
-
 # =========================
-# GIOI THIEU
-# =========================
-
-@bot.tree.command(name="gioi_thieu")
-async def intro(interaction: discord.Interaction):
-
-    embed = discord.Embed(
-        title=f"{MINORI} Minori Bot",
-        description="Hello!",
-        color=0xF0B85A
-    )
-
-    await interaction.response.send_message(embed=embed)
-
-
-# =========================
-# NHAN VAT
-# =========================
-
-@bot.tree.command(name="nhan_vat")
-@app_commands.choices(
-    nhan_vat=[
-        app_commands.Choice(name="Minori", value="minori"),
-        app_commands.Choice(name="Haruka", value="haruka"),
-        app_commands.Choice(name="Airi", value="airi"),
-        app_commands.Choice(name="Shizuku", value="hinomori"),
-        app_commands.Choice(name="Saki", value="saki")
-    ]
-)
-async def nhan_vat(interaction: discord.Interaction, nhan_vat: app_commands.Choice[str]):
-
-    c = CHARACTERS[nhan_vat.value]
-
-    embed = discord.Embed(title=c["name"], description=c["info"])
-    embed.set_image(url=c["image"])
-
-    await interaction.response.send_message(embed=embed)
-
-
-# =========================
-# PROFILE (FIXED)
+# PROFILE
 # =========================
 
 @bot.tree.command(name="profile")
 async def profile(interaction: discord.Interaction):
 
-    user, users = get_user(interaction.user.id)
+    user = get_user(interaction.user.id)
 
     embed = discord.Embed(
-        title=f"Profile {interaction.user.display_name}",
+        title=f"Profile {interaction.user.name}",
         color=0xF0B85A
     )
 
@@ -197,21 +151,19 @@ async def profile(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=embed)
 
-
 # =========================
-# DAILY (FIXED)
+# DAILY
 # =========================
 
 @bot.tree.command(name="daily")
 async def daily(interaction: discord.Interaction):
 
-    user, users = get_user(interaction.user.id)
-    uid = str(interaction.user.id)
+    user = get_user(interaction.user.id)
 
     today = datetime.now().strftime("%Y-%m-%d")
 
     if user["daily"] == today:
-        await interaction.response.send_message("❌ Bạn đã nhận hôm nay!")
+        await interaction.response.send_message("❌ Đã nhận rồi!")
         return
 
     reward = random.randint(300, 1000)
@@ -219,15 +171,12 @@ async def daily(interaction: discord.Interaction):
     user["gems"] += reward
     user["daily"] = today
 
-    save_users(users)
+    update_user(user)
 
-    await interaction.response.send_message(
-        f"🎁 Bạn nhận {reward} gems!"
-    )
-
+    await interaction.response.send_message(f"🎁 +{reward} gems")
 
 # =========================
-# PLAY SOLO (FIXED FULL)
+# PLAY SOLO
 # =========================
 
 @bot.tree.command(name="play_solo")
@@ -242,26 +191,24 @@ async def daily(interaction: discord.Interaction):
         app_commands.Choice(name="Append", value="append"),
     ]
 )
-async def play_solo(
-    interaction: discord.Interaction,
-    song: app_commands.Choice[str],
-    difficulty: app_commands.Choice[str]
-):
+async def play_solo(interaction: discord.Interaction,
+                     song: app_commands.Choice[str],
+                     difficulty: app_commands.Choice[str]):
 
-    user, users = get_user(interaction.user.id)
+    user = get_user(interaction.user.id)
 
     level = SONGS[song.value]["levels"][difficulty.value]
 
-    rewards = {
+    reward_table = {
         "easy": 10,
         "normal": 20,
         "hard": 30,
         "expert": 40,
         "master": 50,
-        "append": 55
+        "append": 60
     }
 
-    reward = rewards[difficulty.value]
+    reward = reward_table[difficulty.value]
 
     is_clear = random.random() < 0.75
 
@@ -272,18 +219,18 @@ async def play_solo(
         user["gems"] += reward
 
         embed = discord.Embed(
-            title="🎵 CLEAR!",
+            title="🎵 CLEAR",
             description=f"{song.name} ({difficulty.name})",
             color=0x57F287
         )
 
-        embed.add_field(name="💎 Reward", value=f"+{reward}")
+        embed.add_field(name="💎 +Gems", value=reward)
 
     else:
         user["fail_count"] += 1
 
-        percent = random.uniform(5, 25)
-        lost = int(user["gems"] * percent / 100)
+        loss_rate = random.uniform(5, 25)
+        lost = int(user["gems"] * loss_rate / 100)
 
         user["gems"] = max(0, user["gems"] - lost)
 
@@ -294,34 +241,28 @@ async def play_solo(
         )
 
         embed.add_field(name="❌ Lost", value=f"-{lost}")
-        embed.add_field(name="📉 Rate", value=f"{percent:.2f}%")
+        embed.add_field(name="📉 Rate", value=f"{loss_rate:.2f}%")
 
-    save_users(users)
+    update_user(user)
 
-    embed.add_field(name="🎚 Level", value=str(level))
-    embed.add_field(name="💰 Total Gems", value=str(user["gems"]))
+    embed.add_field(name="🎚 Level", value=level)
+    embed.add_field(name="💰 Gems", value=user["gems"])
 
     await interaction.response.send_message(embed=embed)
 
-
 # =========================
-# ERROR HANDLER (FIXED)
+# ERROR HANDLER
 # =========================
 
 @bot.tree.error
-async def on_app_command_error(interaction: discord.Interaction, error):
-
+async def error_handler(interaction: discord.Interaction, error):
     print("ERROR:")
     traceback.print_exception(type(error), error, error.__traceback__)
 
     try:
-        await interaction.response.send_message(
-            "❌ Đã xảy ra lỗi!",
-            ephemeral=True
-        )
+        await interaction.response.send_message("❌ Error xảy ra!", ephemeral=True)
     except:
         pass
-
 
 # =========================
 # RUN BOT
