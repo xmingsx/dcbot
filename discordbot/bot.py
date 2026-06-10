@@ -468,26 +468,26 @@ async def play_solo(
 
     is_clear = random.random() < 0.763
 
-    if is_clear:
+if is_clear:
 
-        user["clear_count"] += 1
-        user["gems"] += reward
+    user["clear_count"] += 1
+    user["gems"] += reward
 
-        embed = discord.Embed(
-            title="🎵 Solo Live - CLEAR",
-            description=(
-                f"Bạn đã hoàn thành "
-                f"**{song.name}** "
-                f"({difficulty.name})"
-            ),
-            color=0x57F287
-        )
+    embed = discord.Embed(
+        title="🎵 Solo Live - CLEAR",
+        description=(
+            f"Bạn đã hoàn thành "
+            f"**{song.name}** "
+            f"({difficulty.name})"
+        ),
+        color=0x57F287
+    )
 
-        embed.add_field(
-            name="💎 Đá nhận được",
-            value=f"+{reward}",
-            inline=True
-        )
+    embed.add_field(
+        name="💎 Đá nhận được",
+        value=f"+{reward}",
+        inline=True
+    )
 
 else:
 
@@ -502,26 +502,32 @@ else:
         ),
         color=0xED4245
     )
-    
-    user["solo_count"] += 1
-
-    save_users(users)
 
     embed.add_field(
-        name="📈 Độ khó",
-        value=str(level),
+        name="💖 An ủi",
+        value="Bạn không bị mất đá nào!",
         inline=False
     )
 
-    embed.add_field(
-        name="💖 Tổng đá hiện tại",
-        value=str(user["gems"]),
-        inline=False
-    )
+user["solo_count"] += 1
 
-    await interaction.response.send_message(
-        embed=embed
-    )
+save_users(users)
+
+embed.add_field(
+    name="📈 Độ khó",
+    value=str(level),
+    inline=False
+)
+
+embed.add_field(
+    name="💖 Tổng đá hiện tại",
+    value=str(user["gems"]),
+    inline=False
+)
+
+await interaction.response.send_message(
+    embed=embed
+)
     
 # =========================
 # BẮT LỖI
