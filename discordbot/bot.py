@@ -220,7 +220,7 @@ async def gioi_thieu(interaction: discord.Interaction):
         value=(
             "• /ping\n"
             "• /loi_chao\n"
-            "• /loi_chuc_thi_thpt\n"
+            "• /loi_chuc_thi_cu\n"
             "• /nhan_vat\n"
             "• /gioi_thieu"
         ),
@@ -282,14 +282,14 @@ async def loi_chao(interaction: discord.Interaction):
     )
 
 # =========================
-# /LOI_CHUC_THI_THPT
+# /LOI_CHUC_THI_CU
 # =========================
 
 @bot.tree.command(
-    name="loi_chuc_thi_thpt",
-    description="Nhận lời chúc thi THPT từ Minori"
+    name="loi_chuc_thi_cu",
+    description="Nhận lời chúc thi cử từ Minori"
 )
-async def loi_chuc_thi_thpt(interaction: discord.Interaction):
+async def loi_chuc_thi_cu(interaction: discord.Interaction):
 
     messages = [
         "🌸 Chúc bạn thật bình tĩnh và tự tin trong kỳ thi nhé!",
