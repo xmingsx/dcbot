@@ -1,6 +1,8 @@
 import os
+import random
 import traceback
 import discord
+
 from discord.ext import commands
 from discord import app_commands
 
@@ -30,6 +32,62 @@ bot = commands.Bot(
 MINORI = "<:Minori_Hehehe:1509935548863742002>"
 
 # =========================
+# DỮ LIỆU NHÂN VẬT
+# =========================
+
+CHARACTERS = {
+    "minori": {
+        "name": "🌼 Minori Hanasato",
+        "info": (
+            "Học sinh năm hai tại Miyamasuzaka Girls Academy.\n"
+            "Thành viên nhóm idol MORE MORE JUMP!.\n"
+            "Là một cô gái luôn cố gắng hết mình để theo đuổi ước mơ."
+        ),
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/d/d0/Happy_Birthday%21%21_2025_%28Minori%29.png/revision/latest/scale-to-width-down/1000?cb=20250413150129"
+    },
+
+    "haruka": {
+        "name": "🐧 Haruka Kiritani",
+        "info": (
+            "Học sinh năm hai tại Miyamasuzaka Girls Academy.\n"
+            "Thành viên MORE MORE JUMP!.\n"
+            "Từng là một idol nổi tiếng trước khi gia nhập nhóm."
+        ),
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/d/dc/Happy_Birthday%21%21_2024_%28Haruka%29.png/revision/latest/scale-to-width-down/1000?cb=20241004150010"
+    },
+
+    "airi": {
+        "name": "🍑 Airi Momoi",
+        "info": (
+            "Học sinh năm ba tại Miyamasuzaka Girls Academy.\n"
+            "Thành viên MORE MORE JUMP!.\n"
+            "Luôn năng động và mang lại bầu không khí vui vẻ."
+        ),
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/7/70/Happy_Birthday%21%21_2025_%28Airi%29.png/revision/latest/scale-to-width-down/1000?cb=20250318150009"
+    },
+
+    "hinomori": {
+        "name": "💧 Shizuku Hinomori",
+        "info": (
+            "Học sinh năm ba tại Miyamasuzaka Girls Academy.\n"
+            "Thành viên MORE MORE JUMP!.\n"
+            "Người chị dịu dàng và luôn quan tâm đến mọi người."
+        ),
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/3/39/Happy_Birthday%21%21_2024_%28Shizuku%29.png/revision/latest/scale-to-width-down/1000?cb=20241205150501"
+    },
+
+    "saki": {
+        "name": "⭐ Saki Tenma",
+        "info": (
+            "Học sinh năm hai tại Miyamasuzaka Girls Academy.\n"
+            "Thành viên Leo/need.\n"
+            "Luôn vui vẻ và mang lại năng lượng tích cực."
+        ),
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/e/e8/Happy_Birthday%21%21_2025_%28Saki%29.png/revision/latest/scale-to-width-down/1000?cb=20250508150430"
+    }
+}
+
+# =========================
 # KHI BOT KHỞI ĐỘNG
 # =========================
 
@@ -56,10 +114,8 @@ async def on_ready():
     print(f"Đang ở {len(bot.guilds)} máy chủ")
     print("=" * 40)
 
-    print("DANH SÁCH SERVER:")
-
     for guild in bot.guilds:
-        print(f"{guild.name} | ID: {guild.id}")
+        print(f"{guild.name} | {guild.id}")
 
     print("=" * 40)
 
@@ -85,7 +141,7 @@ async def ping(interaction: discord.Interaction):
 
 @bot.tree.command(
     name="gioi_thieu",
-    description="Giới thiệu về mình"
+    description="Giới thiệu về Minori Bot"
 )
 async def gioi_thieu(interaction: discord.Interaction):
 
@@ -96,14 +152,19 @@ async def gioi_thieu(interaction: discord.Interaction):
     )
 
     embed.add_field(
-        name=f"Một số lệnh bạn có thể sử dụng nè {MINORI}",
+        name="📖 Các lệnh hiện có",
         value=(
-            "• /ping - Kiểm tra độ trễ của mình\n"
-            "• /loi_chao - Lời chào từ Minori\n"
-            "• /nhan_vat - Xem thông tin nhân vật\n"
-            "• /gioi_thieu - Giới thiệu về mình"
+            "• /ping\n"
+            "• /loi_chao\n"
+            "• /loi_chuc_thi_thpt\n"
+            "• /nhan_vat\n"
+            "• /gioi_thieu"
         ),
         inline=False
+    )
+
+    embed.set_thumbnail(
+        url=CHARACTERS["minori"]["image"]
     )
 
     embed.set_footer(
@@ -120,15 +181,15 @@ async def gioi_thieu(interaction: discord.Interaction):
 
 @bot.tree.command(
     name="loi_chao",
-    description="1 Lời chào lúc thức dậy, nếu rảnh sẽ update chào random"
+    description="Lời chào từ Minori"
 )
-async def chao(interaction: discord.Interaction):
+async def loi_chao(interaction: discord.Interaction):
 
     embed = discord.Embed(
         title=f"{MINORI} Ô 2 Ô!",
         description=(
-            "Ô ai vậy nè\n"
-            f"Dậy đi nào darling, trời sáng rồi nè {MINORI}"
+            "Ô ai vậy nè?\n"
+            "Dậy đi nào darling, trời sáng rồi nè 💖"
         ),
         color=0xF0B85A
     )
@@ -147,6 +208,37 @@ async def chao(interaction: discord.Interaction):
     )
 
 # =========================
+# /LOI_CHUC_THI_THPT
+# =========================
+
+@bot.tree.command(
+    name="loi_chuc_thi_thpt",
+    description="Nhận lời chúc thi THPT từ Minori"
+)
+async def loi_chuc_thi_thpt(interaction: discord.Interaction):
+
+    messages = [
+        "🌸 Chúc bạn thật bình tĩnh và tự tin trong kỳ thi nhé!",
+        "💖 Hãy tin vào những gì bạn đã cố gắng suốt thời gian qua!",
+        "⭐ Chúc bạn đạt được số điểm mà mình mong muốn!",
+        "🌼 Minori tin rằng bạn sẽ làm được!",
+        "✨ Cố gắng hết sức và đừng bỏ cuộc nhé!",
+        "🍀 Chúc bạn gặp thật nhiều may mắn trong phòng thi!",
+        "📚 Kiến thức đã sẵn sàng rồi, giờ chỉ cần tự tin thôi!",
+        "💛 Thi thật tốt nhé, mình luôn cổ vũ bạn!"
+    ]
+
+    embed = discord.Embed(
+        title="🎓 Lời chúc thi THPT",
+        description=random.choice(messages),
+        color=0xF0B85A
+    )
+
+    await interaction.response.send_message(
+        embed=embed
+    )
+
+# =========================
 # /NHAN_VAT
 # =========================
 
@@ -156,26 +248,11 @@ async def chao(interaction: discord.Interaction):
 )
 @app_commands.choices(
     nhan_vat=[
-        app_commands.Choice(
-            name="Minori Hanasato",
-            value="minori"
-        ),
-        app_commands.Choice(
-            name="Haruka Kiritani",
-            value="haruka"
-        ),
-        app_commands.Choice(
-            name="Airi Momoi",
-            value="airi"
-        ),
-        app_commands.Choice(
-            name="Shizuku Hinomori",
-            value="hinomori"
-        ),
-        app_commands.Choice(
-            name="Saki Tenma",
-            value="saki"
-        ),
+        app_commands.Choice(name="Minori Hanasato", value="minori"),
+        app_commands.Choice(name="Haruka Kiritani", value="haruka"),
+        app_commands.Choice(name="Airi Momoi", value="airi"),
+        app_commands.Choice(name="Shizuku Hinomori", value="hinomori"),
+        app_commands.Choice(name="Saki Tenma", value="saki")
     ]
 )
 async def nhan_vat(
@@ -183,19 +260,24 @@ async def nhan_vat(
     nhan_vat: app_commands.Choice[str]
 ):
 
-    data = {
-        "minori": "🌼 Minori Hanasato là học sinh năm hai tại Miyamasuzaka. Thành viên MORE MORE JUMP!",
-        "haruka": "🐧 Haruka Kiritani là học sinh năm hai tại Miyamasuzaka. Thành viên MORE MORE JUMP!",
-        "airi": "🍑 Airi Momoi là học sinh năm ba tại Miyamasuzaka. Thành viên MORE MORE JUMP!",
-        "hinomori": "💧 Shizuku Hinomori là học sinh năm ba tại Miyamasuzaka. Thành viên MORE MORE JUMP!",
-        "saki": "⭐ Saki Tenma là học sinh năm hai tại Miyamasuzaka. Thành viên Leo/need!"
-    }
+    char = CHARACTERS[nhan_vat.value]
+
+    embed = discord.Embed(
+        title=char["name"],
+        description=char["info"],
+        color=0xF0B85A
+    )
+
+    embed.set_image(
+        url=char["image"]
+    )
+
+    embed.set_footer(
+        text="Project SEKAI Character Information"
+    )
 
     await interaction.response.send_message(
-        data.get(
-            nhan_vat.value,
-            "Không tìm thấy nhân vật."
-        )
+        embed=embed
     )
 
 # =========================
@@ -224,7 +306,7 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 
 if not TOKEN:
     raise ValueError(
-        "Không tìm thấy DISCORD_TOKEN trong Environment Variables."
+        "Không tìm thấy DISCORD_TOKEN."
     )
 
 # =========================
@@ -232,7 +314,7 @@ if not TOKEN:
 # =========================
 
 print("=" * 40)
-print("ĐANG KHỞI ĐỘNG DISCORD BOT")
+print("ĐANG KHỞI ĐỘNG MINORI BOT")
 print("=" * 40)
 
 bot.run(TOKEN)
