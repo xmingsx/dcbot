@@ -1,24 +1,14 @@
-import sqlite3
+from flask import Flask
+from threading import Thread
 
-DB_NAME = "bot.db"
+app = Flask(__name__)
 
-def connect():
-    return sqlite3.connect(DB_NAME)
+@app.route("/")
+def home():
+    return "Bot is alive!"
 
-def init_db():
-    conn = connect()
-    c = conn.cursor()
+def run():
+    app.run(host="0.0.0.0", port=8080)
 
-    c.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        user_id TEXT PRIMARY KEY,
-        gems INTEGER DEFAULT 0,
-        daily TEXT DEFAULT '',
-        solo_count INTEGER DEFAULT 0,
-        clear_count INTEGER DEFAULT 0,
-        fail_count INTEGER DEFAULT 0
-    )
-    """)
-
-    conn.commit()
-    conn.close()
+def keep_alive():
+    Thread(target=run).start()
