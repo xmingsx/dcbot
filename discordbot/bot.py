@@ -147,11 +147,9 @@ def check_connection():
     global conn, cur
 
     try:
-        conn.rollback()
         cur.execute("SELECT 1")
 
     except Exception:
-
         print("MẤT KẾT NỐI DATABASE - ĐANG KẾT NỐI LẠI")
 
         conn = psycopg2.connect(
@@ -727,10 +725,7 @@ async def play_solo(
 # =========================
 
 @bot.tree.error
-async def on_error(
-    interaction: discord.Interaction,
-    error: app_commands.AppCommandError
-):
+async def on_error(interaction, error):
 
     print("\n===== ERROR =====")
 
@@ -739,6 +734,14 @@ async def on_error(
         error,
         error.__traceback__
     )
+
+    try:
+        await interaction.response.send_message(
+            "❌ Đã xảy ra lỗi.",
+            ephemeral=True
+        )
+    except:
+        pass
 
 # =========================
 # TOKEN
