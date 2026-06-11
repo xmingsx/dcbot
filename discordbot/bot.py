@@ -126,8 +126,17 @@ print("=" * 40)
 print("DATABASE_URL ĐÃ ĐƯỢC NẠP")
 print("=" * 40)
 
-conn = psycopg2.connect(DATABASE_URL)
-cur = conn.cursor()
+try:
+    conn = psycopg2.connect(DATABASE_URL)
+    cur = conn.cursor()
+
+    print("=" * 40)
+    print("KẾT NỐI POSTGRESQL THÀNH CÔNG")
+    print("=" * 40)
+
+except Exception as e:
+    print("LỖI POSTGRESQL:", e)
+    raise e
 
 cur.execute("""
 CREATE TABLE IF NOT EXISTS users (
