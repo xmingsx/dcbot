@@ -32,6 +32,7 @@ bot = commands.Bot(
 # =========================
 
 MINORI = "<:Minori_Hehehe:1509935548863742002>"
+cooldowns = {}
 
 # =========================
 # DỮ LIỆU NHÂN VẬT
@@ -302,6 +303,37 @@ async def on_ready():
         print(f"{guild.name} | {guild.id}")
 
     print("=" * 40)
+
+print("=" * 40)
+
+# =========================
+# COOLDOWN TOÀN BỘ LỆNH
+# =========================
+
+cooldowns = {}
+
+@bot.tree.interaction_check
+async def global_cooldown(interaction: discord.Interaction):
+
+    user_id = interaction.user.id
+
+    now = datetime.now().timestamp()
+
+    if user_id in cooldowns:
+
+        remaining = cooldowns[user_id] - now
+
+        if remaining > 0:
+
+            await interaction.response.send_message(
+                f"⏳ Vui lòng chờ {round(remaining, 1)} giây rồi dùng tiếp.",
+                ephemeral=True
+            )
+            return False
+
+    cooldowns[user_id] = now + 5
+
+    return True
 
 # =========================
 # /PING
