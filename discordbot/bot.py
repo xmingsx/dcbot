@@ -240,7 +240,10 @@ def update_user(user):
 
         conn.commit()
 
-    except Exception:
+    except Exception as e:
+
+        print("Lỗi update_user:", e)
+        print("Đang kết nối lại PostgreSQL...")
 
         conn = psycopg2.connect(
             DATABASE_URL,
@@ -249,7 +252,24 @@ def update_user(user):
 
         cur = conn.cursor()
 
-        update_user(user)
+        cur.execute("""
+        UPDATE users
+        SET gems=%s,
+            daily=%s,
+            solo_count=%s,
+            clear_count=%s,
+            fail_count=%s
+        WHERE user_id=%s
+        """, (
+            user["gems"],
+            user["daily"],
+            user["solo_count"],
+            user["clear_count"],
+            user["fail_count"],
+            user["user_id"]
+        ))
+
+        conn.commit()
 
 # =========================
 # KHI BOT KHỞI ĐỘNG
