@@ -472,13 +472,11 @@ async def profile(interaction: discord.Interaction):
 )
 async def daily(interaction: discord.Interaction):
 
-    users = get_user(interaction.user.id)
-
-    uid = str(interaction.user.id)
+    user = get_user(interaction.user.id)
 
     today = datetime.now().strftime("%Y-%m-%d")
 
-    if users[uid]["daily"] == today:
+    if user["daily"] == today:
 
         await interaction.response.send_message(
             "❌ Hôm nay bạn đã nhận Daily rồi!"
@@ -487,10 +485,10 @@ async def daily(interaction: discord.Interaction):
 
     gems = random.randint(367, 3670)
 
-    users[uid]["gems"] += gems
-    users[uid]["daily"] = today
+    user["gems"] += gems
+    user["daily"] = today
 
-    save_users(users)
+    update_user(user)
 
     embed = discord.Embed(
         title="🎁 Daily Reward",
@@ -532,8 +530,7 @@ async def play_solo(
     difficulty: app_commands.Choice[str]
 ):
 
-    users = get_user(interaction.user.id)
-    user = users[str(interaction.user.id)]
+    user = get_user(interaction.user.id)
 
     level = SONGS[song.value]["levels"][difficulty.value]
 
@@ -548,7 +545,6 @@ async def play_solo(
 
     reward = rewards[difficulty.value]
 
-    # 76.3% clear - 23.7% fail
     is_clear = random.random() < 0.763
 
     if is_clear:
@@ -594,7 +590,7 @@ async def play_solo(
 
     user["solo_count"] += 1
 
-    save_users(users)
+    update_user(user)
 
     embed.add_field(
         name="📈 Độ khó",
