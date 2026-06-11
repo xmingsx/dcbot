@@ -577,6 +577,8 @@ async def profile(interaction: discord.Interaction):
 # /DAILY
 # =========================
 
+from datetime import datetime, timezone, timedelta
+
 @bot.tree.command(
     name="daily",
     description="Nhận đá hằng ngày"
@@ -585,7 +587,9 @@ async def daily(interaction: discord.Interaction):
 
     user = get_user(interaction.user.id)
 
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = (
+        datetime.now(timezone.utc) + timedelta(hours=7)
+    ).strftime("%Y-%m-%d")
 
     if user["daily"] == today:
 
