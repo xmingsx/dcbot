@@ -179,7 +179,6 @@ def get_user(user_id):
     check_connection()
 
     user_id = str(user_id)
-    user_id = str(user_id)
 
     cur.execute(
         "SELECT * FROM users WHERE user_id = %s",
