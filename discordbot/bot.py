@@ -127,7 +127,11 @@ print("DATABASE_URL ĐÃ ĐƯỢC NẠP")
 print("=" * 40)
 
 try:
-    conn = psycopg2.connect(DATABASE_URL)
+    conn = psycopg2.connect(
+        DATABASE_URL,
+        sslmode="require"
+    )
+
     cur = conn.cursor()
 
     print("=" * 40)
@@ -137,6 +141,24 @@ try:
 except Exception as e:
     print("LỖI POSTGRESQL:", e)
     raise e
+
+
+def check_connection():
+    global conn, cur
+
+    try:
+        cur.execute("SELECT 1")
+
+    except Exception:
+
+        print("MẤT KẾT NỐI DATABASE - ĐANG KẾT NỐI LẠI")
+
+        conn = psycopg2.connect(
+            DATABASE_URL,
+            sslmode="require"
+        )
+
+        cur = conn.cursor()
 
 cur.execute("""
 CREATE TABLE IF NOT EXISTS users (
