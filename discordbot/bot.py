@@ -4,7 +4,7 @@ import traceback
 import discord
 import psycopg2
 
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from discord.ext import commands
 from discord import app_commands
 
@@ -576,8 +576,6 @@ async def profile(interaction: discord.Interaction):
 # =========================
 # /DAILY
 # =========================
-
-from datetime import datetime, timezone, timedelta
 
 @bot.tree.command(
     name="daily",
