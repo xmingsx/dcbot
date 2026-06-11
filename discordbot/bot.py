@@ -108,48 +108,86 @@ SONGS = {
 }
 
 # =========================
-# USER DATA
+# USER DATA (POSTGRESQL)
 # =========================
 
-USER_FILE = "users.json"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-def load_users():
-    try:
-        with open(USER_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return {}
+conn = psycopg2.connect(DATABASE_URL)
+cur = conn.cursor()
 
+cur.execute("""
+CREATE TABLE IF NOT EXISTS users (
+    user_id TEXT PRIMARY KEY,
+    gems INTEGER DEFAULT 0,
+    daily TEXT DEFAULT '',
+    solo_count INTEGER DEFAULT 0,
+    clear_count INTEGER DEFAULT 0,
+    fail_count INTEGER DEFAULT 0
+)
+""")
 
-def save_users(data):
-    with open(USER_FILE, "w", encoding="utf-8") as f:
-        json.dump(
-            data,
-            f,
-            indent=4,
-            ensure_ascii=False
-        )
+conn.commit()
 
 
 def get_user(user_id):
 
-    users = load_users()
-
     user_id = str(user_id)
 
-    if user_id not in users:
+    cur.execute(
+        "SELECT * FROM users WHERE user_id = %s",
+        (user_id,)
+    )
 
-        users[user_id] = {
-            "gems": 0,
-            "daily": "",
-            "solo_count": 0,
-            "clear_count": 0,
-            "fail_count": 0
-        }
+    user = cur.fetchone()
 
-        save_users(users)
+    if user is None:
 
-    return users
+        cur.execute("""
+        INSERT INTO users
+        (user_id, gems, daily, solo_count, clear_count, fail_count)
+        VALUES (%s, 0, '', 0, 0, 0)
+        """, (user_id,))
+
+        conn.commit()
+
+        cur.execute(
+            "SELECT * FROM users WHERE user_id = %s",
+            (user_id,)
+        )
+
+        user = cur.fetchone()
+
+    return {
+        "user_id": user[0],
+        "gems": user[1],
+        "daily": user[2],
+        "solo_count": user[3],
+        "clear_count": user[4],
+        "fail_count": user[5]
+    }
+
+
+def update_user(user):
+
+    cur.execute("""
+    UPDATE users
+    SET gems=%s,
+        daily=%s,
+        solo_count=%s,
+        clear_count=%s,
+        fail_count=%s
+    WHERE user_id=%s
+    """, (
+        user["gems"],
+        user["daily"],
+        user["solo_count"],
+        user["clear_count"],
+        user["fail_count"],
+        user["user_id"]
+    ))
+
+    conn.commit()
 
 # =========================
 # KHI BOT KHỞI ĐỘNG
