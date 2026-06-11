@@ -147,6 +147,7 @@ def check_connection():
     global conn, cur
 
     try:
+        conn.rollback()
         cur.execute("SELECT 1")
 
     except Exception:
