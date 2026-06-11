@@ -216,26 +216,40 @@ def get_user(user_id):
 
 def update_user(user):
 
-    check_connection()
+    global conn, cur
 
-    cur.execute("""
-    UPDATE users
-    SET gems=%s,
-        daily=%s,
-        solo_count=%s,
-        clear_count=%s,
-        fail_count=%s
-    WHERE user_id=%s
-    """, (
-        user["gems"],
-        user["daily"],
-        user["solo_count"],
-        user["clear_count"],
-        user["fail_count"],
-        user["user_id"]
-    ))
+    try:
+        check_connection()
 
-    conn.commit()
+        cur.execute("""
+        UPDATE users
+        SET gems=%s,
+            daily=%s,
+            solo_count=%s,
+            clear_count=%s,
+            fail_count=%s
+        WHERE user_id=%s
+        """, (
+            user["gems"],
+            user["daily"],
+            user["solo_count"],
+            user["clear_count"],
+            user["fail_count"],
+            user["user_id"]
+        ))
+
+        conn.commit()
+
+    except Exception:
+
+        conn = psycopg2.connect(
+            DATABASE_URL,
+            sslmode="require"
+        )
+
+        cur = conn.cursor()
+
+        update_user(user)
 
 # =========================
 # KHI BOT KHỞI ĐỘNG
