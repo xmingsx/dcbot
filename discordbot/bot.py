@@ -176,6 +176,9 @@ conn.commit()
 
 def get_user(user_id):
 
+    check_connection()
+
+    user_id = str(user_id)
     user_id = str(user_id)
 
     cur.execute(
