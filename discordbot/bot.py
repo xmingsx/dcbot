@@ -32,7 +32,6 @@ bot = commands.Bot(
 # =========================
 
 MINORI = "<:Minori_Hehehe:1509935548863742002>"
-cooldowns = {}
 
 # =========================
 # DỮ LIỆU NHÂN VẬT
