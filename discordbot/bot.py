@@ -402,9 +402,7 @@ async def nhan_vat(
 )
 async def profile(interaction: discord.Interaction):
 
-    users = get_user(interaction.user.id)
-
-    user = users[str(interaction.user.id)]
+    user = get_user(interaction.user.id)
 
     total = (
         user["clear_count"] +
