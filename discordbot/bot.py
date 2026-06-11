@@ -113,6 +113,19 @@ SONGS = {
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# =========================
+# KIỂM TRA DATABASE_URL
+# =========================
+
+if not DATABASE_URL:
+    raise ValueError(
+        "Không tìm thấy DATABASE_URL trong Environment Variables."
+    )
+
+print("=" * 40)
+print("DATABASE_URL ĐÃ ĐƯỢC NẠP")
+print("=" * 40)
+
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
