@@ -217,6 +217,8 @@ def get_user(user_id):
 
 def update_user(user):
 
+    check_connection()
+
     cur.execute("""
     UPDATE users
     SET gems=%s,
