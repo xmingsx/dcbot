@@ -329,7 +329,7 @@ async def global_cooldown(interaction: discord.Interaction):
             )
             return False
 
-    cooldowns[user_id] = now + 5
+    cooldowns[user_id] = now + 10
 
     return True
 
