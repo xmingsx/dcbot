@@ -280,7 +280,7 @@ async def on_ready():
     await bot.change_presence(
         status=discord.Status.idle,
         activity=discord.CustomActivity(
-            "💖 2 Môn còn lại nữa thôi, cố gắng lên nào. sắp TÀY rồi"
+            "💖 Xong hết rồi, TÀY to rồi"
         )
     )
 
