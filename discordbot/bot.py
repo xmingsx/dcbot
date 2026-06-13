@@ -288,7 +288,11 @@ async def on_ready():
 
     try:
         synced = await bot.tree.sync()
-        print(f"Đã đồng bộ {len(synced)} slash command.")
+
+        print(
+            f"Đã đồng bộ {len(synced)} slash command."
+        )
+
     except Exception as e:
         print("Lỗi sync command:", e)
 
@@ -304,8 +308,6 @@ async def on_ready():
 
     print("=" * 40)
 
-print("=" * 40)
-
 # =========================
 # COOLDOWN TOÀN BỘ LỆNH
 # =========================
@@ -313,7 +315,15 @@ print("=" * 40)
 cooldowns = {}
 
 @bot.tree.interaction_check
-async def global_cooldown(interaction: discord.Interaction):
+async def global_cooldown(
+    interaction: discord.Interaction
+):
+
+    print(
+        f"COOLDOWN CHECK | "
+        f"{interaction.user} | "
+        f"{interaction.command}"
+    )
 
     user_id = interaction.user.id
 
@@ -326,15 +336,16 @@ async def global_cooldown(interaction: discord.Interaction):
         if remaining > 0:
 
             await interaction.response.send_message(
-                f"⏳ Vui lòng chờ {round(remaining, 1)} giây rồi dùng tiếp.",
+                f"⏳ Vui lòng chờ "
+                f"{round(remaining,1)} giây rồi dùng tiếp.",
                 ephemeral=True
             )
+
             return False
 
     cooldowns[user_id] = now + 10
 
     return True
-
 # =========================
 # /PING
 # =========================
@@ -763,5 +774,7 @@ if not TOKEN:
 print("=" * 40)
 print("ĐANG KHỞI ĐỘNG MINORI BOT")
 print("=" * 40)
+
+print("BOT FILE LOADED 999999")
 
 bot.run(TOKEN)
