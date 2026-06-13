@@ -979,6 +979,61 @@ async def phat_nhac(
     )
 
 # =========================
+# /KICK
+# =========================
+
+@bot.tree.command(
+    name="kick",
+    description="Kick một thành viên khỏi máy chủ"
+)
+@app_commands.checks.has_permissions(administrator=True)
+async def kick(
+    interaction: discord.Interaction,
+    member: discord.Member,
+    reason: str = "Không có lý do"
+):
+    # Không cho kick chính mình
+    if member == interaction.user:
+        await interaction.response.send_message(
+            "❌ Bạn không thể kick chính mình.",
+            ephemeral=True
+        )
+        return
+
+    try:
+        await member.kick(reason=reason)
+
+        await interaction.response.send_message(
+            f"👢 Đã kick {member.mention}\n"
+            f"📝 Lý do: {reason}"
+        )
+
+    except discord.Forbidden:
+        await interaction.response.send_message(
+            "❌ Mình không có quyền kick thành viên này.",
+            ephemeral=True
+        )
+
+    except Exception as e:
+        await interaction.response.send_message(
+            f"❌ Đã xảy ra lỗi: {e}",
+            ephemeral=True
+        )
+
+
+# Báo lỗi khi người dùng không có quyền Administrator
+@kick.error
+async def kick_error(
+    interaction: discord.Interaction,
+    error: app_commands.AppCommandError
+):
+    if isinstance(error, app_commands.errors.MissingPermissions):
+        await interaction.response.send_message(
+            "❌ Chỉ quản trị viên (Administrator) mới có thể sử dụng lệnh này.",
+            ephemeral=True
+        )
+
+# =========================
 # BẮT LỖI
 # =========================
 
