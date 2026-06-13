@@ -277,6 +277,8 @@ def update_user(user):
 @bot.event
 async def on_ready():
 
+    print("ON_READY CALLED")
+
     await bot.change_presence(
         status=discord.Status.idle,
         activity=discord.CustomActivity(
