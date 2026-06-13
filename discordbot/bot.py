@@ -961,6 +961,15 @@ async def phat_nhac(
 ):
     music = MUSIC_FILES[bai_hat.value]
 
+    # Kiểm tra file có tồn tại hay không
+    if not os.path.isfile(music["path"]):
+        await interaction.response.send_message(
+            "❌ Không tìm thấy file nhạc.",
+            ephemeral=True
+        )
+        return
+
+    # Nếu có thì gửi file
     await interaction.response.send_message(
         content=f"🎶 **{music['title']}**",
         file=discord.File(music["path"])
@@ -997,7 +1006,9 @@ async def kick(
         return
 
     # Bot phải có role cao hơn
-    if member.top_role >= interaction.guild.me.top_role:
+    bot_member = interaction.guild.get_member(bot.user.id)
+
+    if bot_member is None or member.top_role >= bot_member.top_role:
         await interaction.response.send_message(
             "❌ Vai trò của mình thấp hơn hoặc bằng thành viên này.",
             ephemeral=True
@@ -1068,7 +1079,9 @@ async def mute(
         return
 
     # Bot phải có role cao hơn
-    if member.top_role >= interaction.guild.me.top_role:
+    bot_member = interaction.guild.get_member(bot.user.id)
+
+    if bot_member is None or member.top_role >= bot_member.top_role:
         await interaction.response.send_message(
             "❌ Vai trò của mình thấp hơn hoặc bằng thành viên này.",
             ephemeral=True
@@ -1125,6 +1138,24 @@ async def unmute(
     interaction: discord.Interaction,
     member: discord.Member
 ):
+    # Không cho unmute chủ server
+    if member == interaction.guild.owner:
+        await interaction.response.send_message(
+            "❌ Không thể bỏ mute chủ server.",
+            ephemeral=True
+        )
+        return
+
+    # Bot phải có role cao hơn
+    bot_member = interaction.guild.get_member(bot.user.id)
+
+    if bot_member is None or member.top_role >= bot_member.top_role:
+        await interaction.response.send_message(
+            "❌ Vai trò của mình thấp hơn hoặc bằng thành viên này.",
+            ephemeral=True
+        )
+        return
+
     try:
         await member.edit(
             timed_out_until=None,
