@@ -375,7 +375,8 @@ async def gioi_thieu(interaction: discord.Interaction):
             "• /nhan_vat\n"
             "• /gioi_thieu\n"
             "• /kick\n"
-            "• /mute"
+            "• /mute\n"
+            "• /unmute"
         ),
         inline=False
     )
