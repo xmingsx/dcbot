@@ -106,6 +106,16 @@ SONGS = {
         }
     }
 }
+# =========================
+# SONG PHAT 
+# =========================
+
+MUSIC_FILES = {
+    "hoshi": {
+        "title": "⭐ Hoshi ni Ichiban Chikai Basho (Leo/need)",
+        "path": "Hoshi_ni_Ichiban_Chikai_Basho_(Full_Version_-_Leo-need).ogg"
+    }
+}
 
 # =========================
 # USER DATA (POSTGRESQL)
@@ -398,7 +408,8 @@ async def gioi_thieu(interaction: discord.Interaction):
             "• /loi_chao\n"
             "• /loi_chuc_thi_cu\n"
             "• /nhan_vat\n"
-            "• /gioi_thieu"
+            "• /gioi_thieu\n"
+            "• /phat_nhac"
         ),
         inline=False
     )
@@ -750,6 +761,36 @@ async def play_solo(
         embed=embed
     )
     
+# =========================
+# /PHAT_NHAC
+# =========================
+
+@bot.tree.command(
+    name="phat_nhac",
+    description="Gửi file nhạc"
+)
+@app_commands.choices(
+    bai_hat=[
+        app_commands.Choice(
+            name="⭐ Hoshi ni Ichiban Chikai Basho (Leo/need)",
+            value="hoshi"
+        )
+    ]
+)
+async def phat_nhac(
+    interaction: discord.Interaction,
+    bai_hat: app_commands.Choice[str]
+):
+    music = MUSIC_FILES[bai_hat.value]
+
+    await interaction.response.send_message(
+        content=f"🎶 Đang gửi: **{music['title']}**"
+    )
+
+    await interaction.followup.send(
+        file=discord.File(music["path"])
+    )
+
 # =========================
 # BẮT LỖI
 # =========================
