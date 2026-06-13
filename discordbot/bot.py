@@ -442,31 +442,43 @@ async def gioi_thieu(interaction: discord.Interaction):
 
 @bot.tree.command(
     name="loi_chao",
-    description="Lời chào từ Minori"
+    description="Lời chào ngẫu nhiên từ Minori"
 )
 async def loi_chao(interaction: discord.Interaction):
 
+    greetings = [
+        "🌼 Chào buổi sáng! Hôm nay cùng cố gắng nhé! 💖",
+        "✨ Xin chào! Mình rất vui khi được gặp bạn!",
+        "🌸 Chúc bạn có một ngày thật tuyệt vời!",
+        "☀️ Dậy thôi nào! Một ngày mới đang chờ bạn đó!",
+        "💛 Hy vọng hôm nay bạn sẽ gặp thật nhiều điều may mắn!",
+        "🎶 Minori đến để tiếp thêm năng lượng cho bạn đây!",
+        "🍀 Đừng quên mỉm cười nhé, mọi chuyện rồi sẽ ổn thôi!",
+        "🌈 Chúc bạn luôn tràn đầy niềm vui và động lực!",
+        "🐧 Cùng nhau cố gắng để tiến gần ước mơ nào!",
+        "💖 Rất vui được gặp bạn! Chúc bạn có khoảng thời gian thật vui vẻ!",
+        "🌟 Cố lên nhé! Minori luôn cổ vũ bạn!",
+        "🎉 Hôm nay cũng là một ngày tuyệt vời để bắt đầu điều mới!",
+        "🌺 Chào bạn! Hãy mang theo nụ cười suốt cả ngày nha!",
+        "📚 Chúc bạn học tập và làm việc thật hiệu quả!",
+        "🍑 Chúc bạn có thật nhiều năng lượng tích cực hôm nay!"
+    ]
+
     embed = discord.Embed(
-        title=f"{MINORI} Ô 2 Ô!",
-        description=(
-            "Ô ai vậy nè?\n"
-            "Dậy đi nào darling, trời sáng rồi nè 💖"
-        ),
+        title=f"{MINORI} Xin chào!",
+        description=random.choice(greetings),
         color=0xF0B85A
     )
 
-    embed.add_field(
-        name="🌼 Lời nhắn từ Minori",
-        value=(
-            "Hôm nay hãy cố gắng hết sức nhé!\n"
-            "Mình sẽ luôn cổ vũ bạn! 💖"
-        ),
-        inline=False
+    embed.set_thumbnail(
+        url=CHARACTERS["minori"]["image"]
     )
 
-    await interaction.response.send_message(
-        embed=embed
+    embed.set_footer(
+        text="Minori luôn ở đây để cổ vũ bạn! 💖"
     )
+
+    await interaction.response.send_message(embed=embed)
 
 # =========================
 # /LOI_CHUC_THI_CU
