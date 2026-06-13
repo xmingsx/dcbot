@@ -775,6 +775,6 @@ print("=" * 40)
 print("ĐANG KHỞI ĐỘNG MINORI BOT")
 print("=" * 40)
 
-print("BOT FILE LOADED 999999")
+raise Exception("TEST123")
 
 bot.run(TOKEN)
