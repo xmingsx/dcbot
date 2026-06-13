@@ -278,6 +278,7 @@ def update_user(user):
 async def on_ready():
 
     print("ON_READY CALLED")
+    print("BOT USER =", bot.user)
 
     await bot.change_presence(
         status=discord.Status.idle,
@@ -326,7 +327,6 @@ async def global_cooldown(
     )
 
     user_id = interaction.user.id
-
     now = datetime.now().timestamp()
 
     if user_id in cooldowns:
@@ -335,17 +335,22 @@ async def global_cooldown(
 
         if remaining > 0:
 
+            print("COOLDOWN BLOCKED")
+
             await interaction.response.send_message(
                 f"⏳ Vui lòng chờ "
-                f"{round(remaining,1)} giây rồi dùng tiếp.",
+                f"{remaining:.1f} giây rồi dùng tiếp.",
                 ephemeral=True
             )
 
             return False
 
+    print("COOLDOWN PASSED")
+
     cooldowns[user_id] = now + 10
 
     return True
+    
 # =========================
 # /PING
 # =========================
@@ -775,6 +780,6 @@ print("=" * 40)
 print("ĐANG KHỞI ĐỘNG MINORI BOT")
 print("=" * 40)
 
-raise Exception("TEST123")
+print("BOT FILE LOADED 999999")
 
 bot.run(TOKEN)
