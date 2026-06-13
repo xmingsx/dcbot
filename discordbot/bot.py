@@ -681,6 +681,9 @@ async def loi_chuc_thi_cu(interaction: discord.Interaction):
         description=random.choice(messages),
         color=0xF0B85A
     )
+    embed.set_footer(
+    text="💖 Minori sẽ luôn ở đây để cổ vũ bạn. Chúc bạn thi thật tốt nhé!"
+    )
 
     await interaction.response.send_message(
         embed=embed
