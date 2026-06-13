@@ -409,7 +409,7 @@ async def gioi_thieu(interaction: discord.Interaction):
             "• /loi_chuc_thi_cu\n"
             "• /nhan_vat\n"
             "• /gioi_thieu\n"
-            "• /tim_kiem_nhac"
+            "• /kick"
         ),
         inline=False
     )
@@ -419,7 +419,8 @@ async def gioi_thieu(interaction: discord.Interaction):
         value=(
             "• /profile\n"
             "• /daily\n"
-            "• /play_solo"
+            "• /play_solo\n"
+            "• /tim_kiem_nhac"
         ),
         inline=False
     )
