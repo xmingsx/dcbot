@@ -767,7 +767,7 @@ async def play_solo(
 
 @bot.tree.command(
     name="tim_kiem_nhac",
-    description="TÌimf kiếm nhạc của game"
+    description="Tìm kiếm nhạc của game"
 )
 @app_commands.choices(
     bai_hat=[
