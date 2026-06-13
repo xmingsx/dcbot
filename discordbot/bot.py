@@ -335,42 +335,6 @@ async def on_ready():
     print("=" * 40)
 
 # =========================
-# COOLDOWN TOÀN BỘ LỆNH
-# =========================
-
-cooldowns = {}
-
-@bot.tree.interaction_check
-async def global_cooldown(
-    interaction: discord.Interaction
-):
-
-    user_id = interaction.user.id
-    now = datetime.now().timestamp()
-
-    if user_id in cooldowns:
-
-        remaining = cooldowns[user_id] - now
-
-        if remaining > 0:
-
-            try:
-                await interaction.response.send_message(
-                    f"⏳ Vui lòng chờ {remaining:.1f} giây.",
-                    ephemeral=True
-                )
-            except:
-                pass
-
-            return False
-
-        cooldowns.pop(user_id, None)
-
-    cooldowns[user_id] = now + 10
-
-    return True
-    
-# =========================
 # /PING
 # =========================
 
