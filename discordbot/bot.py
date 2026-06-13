@@ -275,10 +275,18 @@ def update_user(user):
 # =========================
 
 @bot.event
+async def on_connect():
+    print("CONNECTED TO DISCORD")
+
+
+@bot.event
 async def on_ready():
 
+    print("=" * 40)
     print("ON_READY CALLED")
-    print("BOT USER =", bot.user)
+    print("=" * 40)
+
+    print(f"BOT USER = {bot.user}")
 
     await bot.change_presence(
         status=discord.Status.idle,
@@ -294,8 +302,12 @@ async def on_ready():
             f"Đã đồng bộ {len(synced)} slash command."
         )
 
+        for cmd in synced:
+            print(" -", cmd.name)
+
     except Exception as e:
-        print("Lỗi sync command:", e)
+        print("Lỗi sync command:")
+        print(e)
 
     print("=" * 40)
     print("BOT ĐÃ SẴN SÀNG")
@@ -305,7 +317,9 @@ async def on_ready():
     print("=" * 40)
 
     for guild in bot.guilds:
-        print(f"{guild.name} | {guild.id}")
+        print(
+            f"{guild.name} | {guild.id}"
+        )
 
     print("=" * 40)
 
@@ -745,6 +759,16 @@ async def play_solo(
 @bot.tree.error
 async def on_error(interaction, error):
 
+    if isinstance(
+        error,
+        app_commands.CommandOnCooldown
+    ):
+        await interaction.response.send_message(
+            f"⏳ Chờ {error.retry_after:.1f}s",
+            ephemeral=True
+        )
+        return
+
     print("\n===== ERROR =====")
 
     traceback.print_exception(
@@ -752,14 +776,6 @@ async def on_error(interaction, error):
         error,
         error.__traceback__
     )
-
-    try:
-        await interaction.response.send_message(
-            "❌ Đã xảy ra lỗi.",
-            ephemeral=True
-        )
-    except:
-        pass
 
 # =========================
 # TOKEN
@@ -781,5 +797,7 @@ print("ĐANG KHỞI ĐỘNG MINORI BOT")
 print("=" * 40)
 
 print("BOT FILE LOADED 999999")
+print("TOKEN OK")
+print("STARTING BOT...")
 
 bot.run(TOKEN)
