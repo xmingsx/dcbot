@@ -409,7 +409,8 @@ async def gioi_thieu(interaction: discord.Interaction):
             "• /loi_chuc_thi_cu\n"
             "• /nhan_vat\n"
             "• /gioi_thieu\n"
-            "• /kick"
+            "• /kick\n"
+            "• /mute"
         ),
         inline=False
     )
@@ -1025,6 +1026,65 @@ async def kick(
 # Báo lỗi khi người dùng không có quyền Administrator
 @kick.error
 async def kick_error(
+    interaction: discord.Interaction,
+    error: app_commands.AppCommandError
+):
+    if isinstance(error, app_commands.errors.MissingPermissions):
+        await interaction.response.send_message(
+            "❌ Chỉ quản trị viên (Administrator) mới có thể sử dụng lệnh này.",
+            ephemeral=True
+        )
+
+# =========================
+# /MUTE
+# =========================
+
+@bot.tree.command(
+    name="mute",
+    description="Timeout (mute) một thành viên"
+)
+@app_commands.checks.has_permissions(administrator=True)
+async def mute(
+    interaction: discord.Interaction,
+    member: discord.Member,
+    minutes: app_commands.Range[int, 1, 40320],  # tối đa 28 ngày
+    reason: str = "Không có lý do"
+):
+    if member == interaction.user:
+        await interaction.response.send_message(
+            "❌ Bạn không thể mute chính mình.",
+            ephemeral=True
+        )
+        return
+
+    try:
+        until = datetime.now(timezone.utc) + timedelta(minutes=minutes)
+
+        await member.edit(
+            timed_out_until=until,
+            reason=reason
+        )
+
+        await interaction.response.send_message(
+            f"🔇 Đã mute {member.mention} trong **{minutes} phút**.\n"
+            f"📝 Lý do: {reason}"
+        )
+
+    except discord.Forbidden:
+        await interaction.response.send_message(
+            "❌ Mình không có quyền mute thành viên này.",
+            ephemeral=True
+        )
+
+    except Exception as e:
+        await interaction.response.send_message(
+            f"❌ Đã xảy ra lỗi: {e}",
+            ephemeral=True
+        )
+
+
+@mute.error
+async def mute_error(
     interaction: discord.Interaction,
     error: app_commands.AppCommandError
 ):
