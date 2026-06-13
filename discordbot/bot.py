@@ -811,6 +811,12 @@ async def daily(interaction: discord.Interaction):
     )
 
 # =========================
+# COOLDOWN /PLAY_SOLO
+# =========================
+
+play_solo_cooldowns = {}
+
+# =========================
 # /PLAY_SOLO
 # =========================
 
@@ -840,7 +846,22 @@ async def play_solo(
     difficulty: app_commands.Choice[str]
 ):
 
-    user = get_user(interaction.user.id)
+    user_id = interaction.user.id
+    now = datetime.now().timestamp()
+
+    if user_id in play_solo_cooldowns:
+        remaining = play_solo_cooldowns[user_id] - now
+
+        if remaining > 0:
+            await interaction.response.send_message(
+                f"⏳ Vui lòng chờ {remaining:.1f} giây trước khi chơi tiếp.",
+                ephemeral=True
+            )
+            return
+
+    play_solo_cooldowns[user_id] = now + 5
+
+    user = get_user(user_id)
 
     level = SONGS[song.value]["levels"][difficulty.value]
 
