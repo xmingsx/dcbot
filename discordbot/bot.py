@@ -334,12 +334,6 @@ async def global_cooldown(
     interaction: discord.Interaction
 ):
 
-    print(
-        f"COOLDOWN CHECK | "
-        f"{interaction.user} | "
-        f"{interaction.command}"
-    )
-
     user_id = interaction.user.id
     now = datetime.now().timestamp()
 
@@ -349,17 +343,17 @@ async def global_cooldown(
 
         if remaining > 0:
 
-            print("COOLDOWN BLOCKED")
-
-            await interaction.response.send_message(
-                f"⏳ Vui lòng chờ "
-                f"{remaining:.1f} giây rồi dùng tiếp.",
-                ephemeral=True
-            )
+            try:
+                await interaction.response.send_message(
+                    f"⏳ Vui lòng chờ {remaining:.1f} giây.",
+                    ephemeral=True
+                )
+            except:
+                pass
 
             return False
 
-    print("COOLDOWN PASSED")
+        cooldowns.pop(user_id, None)
 
     cooldowns[user_id] = now + 10
 
@@ -563,8 +557,12 @@ async def profile(interaction: discord.Interaction):
 
     embed = discord.Embed(
         title=f"📖 Hồ sơ của {interaction.user.display_name}",
-        color=0xF0B85A
-    )
+       color=0xF0B85A
+)
+
+    embed.set_thumbnail(
+        url=interaction.user.display_avatar.url
+)
 
     embed.add_field(
         name="💎 Đá",
@@ -759,16 +757,6 @@ async def play_solo(
 @bot.tree.error
 async def on_error(interaction, error):
 
-    if isinstance(
-        error,
-        app_commands.CommandOnCooldown
-    ):
-        await interaction.response.send_message(
-            f"⏳ Chờ {error.retry_after:.1f}s",
-            ephemeral=True
-        )
-        return
-
     print("\n===== ERROR =====")
 
     traceback.print_exception(
@@ -777,6 +765,14 @@ async def on_error(interaction, error):
         error.__traceback__
     )
 
+    try:
+        if not interaction.response.is_done():
+            await interaction.response.send_message(
+                "❌ Đã xảy ra lỗi.",
+                ephemeral=True
+            )
+    except:
+        pass
 # =========================
 # TOKEN
 # =========================
