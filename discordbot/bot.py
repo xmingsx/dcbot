@@ -784,10 +784,7 @@ async def phat_nhac(
     music = MUSIC_FILES[bai_hat.value]
 
     await interaction.response.send_message(
-        content=f"🎶 Đang gửi: **{music['title']}**"
-    )
-
-    await interaction.followup.send(
+        content=f"🎶 **{music['title']}**",
         file=discord.File(music["path"])
     )
 
