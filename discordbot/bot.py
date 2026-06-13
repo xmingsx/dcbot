@@ -113,7 +113,7 @@ SONGS = {
 MUSIC_FILES = {
     "hoshi": {
         "title": "⭐ Hoshi ni Ichiban Chikai Basho (Leo/need)",
-        "path": "Hoshi_ni_Ichiban_Chikai_Basho_(Full_Version_-_Leo-need).ogg"
+        "path": "discordbot/Hoshi_ni_Ichiban_Chikai_Basho_(Full_Version_-_Leo-need).ogg"
     }
 }
 
