@@ -21,6 +21,7 @@ keep_alive()
 # =========================
 
 intents = discord.Intents.default()
+intents.members = True
 
 bot = commands.Bot(
     command_prefix="?",
@@ -1002,6 +1003,22 @@ async def kick(
         )
         return
 
+    # Không cho kick chủ server
+    if member == interaction.guild.owner:
+        await interaction.response.send_message(
+            "❌ Không thể kick chủ server.",
+            ephemeral=True
+        )
+        return
+
+    # Bot phải có role cao hơn
+    if member.top_role >= interaction.guild.me.top_role:
+        await interaction.response.send_message(
+            "❌ Vai trò của mình thấp hơn hoặc bằng thành viên này.",
+            ephemeral=True
+        )
+        return
+
     try:
         await member.kick(reason=reason)
 
@@ -1023,7 +1040,6 @@ async def kick(
         )
 
 
-# Báo lỗi khi người dùng không có quyền Administrator
 @kick.error
 async def kick_error(
     interaction: discord.Interaction,
@@ -1047,12 +1063,29 @@ async def kick_error(
 async def mute(
     interaction: discord.Interaction,
     member: discord.Member,
-    minutes: app_commands.Range[int, 1, 40320],  # tối đa 28 ngày
+    minutes: app_commands.Range[int, 1, 40320],
     reason: str = "Không có lý do"
 ):
+    # Không cho mute chính mình
     if member == interaction.user:
         await interaction.response.send_message(
             "❌ Bạn không thể mute chính mình.",
+            ephemeral=True
+        )
+        return
+
+    # Không cho mute chủ server
+    if member == interaction.guild.owner:
+        await interaction.response.send_message(
+            "❌ Không thể mute chủ server.",
+            ephemeral=True
+        )
+        return
+
+    # Bot phải có role cao hơn
+    if member.top_role >= interaction.guild.me.top_role:
+        await interaction.response.send_message(
+            "❌ Vai trò của mình thấp hơn hoặc bằng thành viên này.",
             ephemeral=True
         )
         return
@@ -1085,6 +1118,53 @@ async def mute(
 
 @mute.error
 async def mute_error(
+    interaction: discord.Interaction,
+    error: app_commands.AppCommandError
+):
+    if isinstance(error, app_commands.errors.MissingPermissions):
+        await interaction.response.send_message(
+            "❌ Chỉ quản trị viên (Administrator) mới có thể sử dụng lệnh này.",
+            ephemeral=True
+        )
+
+# =========================
+# Unmute
+# =========================
+
+@bot.tree.command(
+    name="unmute",
+    description="Bỏ timeout (unmute) một thành viên"
+)
+@app_commands.checks.has_permissions(administrator=True)
+async def unmute(
+    interaction: discord.Interaction,
+    member: discord.Member
+):
+    try:
+        await member.edit(
+            timed_out_until=None,
+            reason="Unmute"
+        )
+
+        await interaction.response.send_message(
+            f"🔊 Đã bỏ mute cho {member.mention}."
+        )
+
+    except discord.Forbidden:
+        await interaction.response.send_message(
+            "❌ Mình không có quyền bỏ mute thành viên này.",
+            ephemeral=True
+        )
+
+    except Exception as e:
+        await interaction.response.send_message(
+            f"❌ Đã xảy ra lỗi: {e}",
+            ephemeral=True
+        )
+
+
+@unmute.error
+async def unmute_error(
     interaction: discord.Interaction,
     error: app_commands.AppCommandError
 ):
