@@ -409,7 +409,7 @@ async def gioi_thieu(interaction: discord.Interaction):
             "• /loi_chuc_thi_cu\n"
             "• /nhan_vat\n"
             "• /gioi_thieu\n"
-            "• /phat_nhac"
+            "• /tim_kiem_nhac"
         ),
         inline=False
     )
@@ -762,12 +762,12 @@ async def play_solo(
     )
     
 # =========================
-# /PHAT_NHAC
+# /Tim nhac
 # =========================
 
 @bot.tree.command(
-    name="phat_nhac",
-    description="Gửi file nhạc"
+    name="tim_kiem_nhac",
+    description="TÌimf kiếm nhạc của game"
 )
 @app_commands.choices(
     bai_hat=[
