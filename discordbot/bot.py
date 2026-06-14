@@ -54,7 +54,7 @@ VS_CHARACTERS = {
             "Ca sĩ ảo nổi tiếng nhất thế giới.\n"
             "Xuất hiện trong nhiều SEKAI khác nhau."
         ),
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/e/ea/Happy_Anniversary%21%21_2025_%28Miku%29.png/revision/latest/scale-to-width-down/1000?cb=20250830150323"
     },
 
     "luka": {
@@ -66,7 +66,7 @@ VS_CHARACTERS = {
         "info": (
             "Virtual Singer trưởng thành và dịu dàng."
         ),
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/e/ed/Happy_Anniversary%21%21_2025_%28Luka%29.png/revision/latest/scale-to-width-down/1000?cb=20250129150033"
     },
 
     "meiko": {
@@ -78,7 +78,7 @@ VS_CHARACTERS = {
         "info": (
             "Virtual Singer đáng tin cậy."
         ),
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/d/df/Happy_Anniversary%21%21_2024_%28MEIKO%29.png/revision/latest/scale-to-width-down/1000?cb=20241104150013"
     },
 
     "rin": {
@@ -90,7 +90,7 @@ VS_CHARACTERS = {
         "info": (
             "Một nửa của bộ đôi Kagamine."
         ),
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/0/09/Happy_Anniversary%21%21_2024_%28Rin%29.png/revision/latest/scale-to-width-down/1000?cb=20241226150134"
     },
 
     "len": {
@@ -102,7 +102,7 @@ VS_CHARACTERS = {
         "info": (
             "Một nửa của bộ đôi Kagamine."
         ),
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/0/06/Happy_Anniversary%21%21_2024_%28Len%29.png/revision/latest/scale-to-width-down/1000?cb=20241226150151"
     },
 
     "kaito": {
@@ -114,7 +114,7 @@ VS_CHARACTERS = {
         "info": (
             "Virtual Singer đáng tin cậy."
         ),
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/4/4a/Happy_Anniversary%21%21_2025_%28KAITO%29.png/revision/latest/scale-to-width-down/1000?cb=20250216153336"
     }
 }
 
@@ -131,7 +131,7 @@ LN_CHARACTERS = {
         "quote": "Mình muốn truyền tải cảm xúc qua âm nhạc.",
         "color": 0x33A1FF,
         "info": "Guitarist và vocalist của Leo/need.",
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/2/2c/Happy_Birthday%21%21_2025_%28Ichika%29.png/revision/latest/scale-to-width-down/1000?cb=20250810150111"
     },
 
     "saki": {
@@ -145,7 +145,7 @@ LN_CHARACTERS = {
             "Em gái của Tsukasa Tenma."
         ),
         
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/e/e8/Happy_Birthday%21%21_2025_%28Saki%29.png/revision/latest/scale-to-width-down/1000?cb=20250508150430"
     },
 
     "honami": {
@@ -155,7 +155,7 @@ LN_CHARACTERS = {
         "quote": "Mình muốn giúp đỡ mọi người.",
         "color": 0xF4B183,
         "info": "Drummer của Leo/need.",
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/6/6f/Happy_Birthday%21%21_2024_%28Honami%29.png/revision/latest/scale-to-width-down/1000?cb=20241026150131"
     },
 
     "shiho": {
@@ -165,7 +165,7 @@ LN_CHARACTERS = {
         "quote": "Âm nhạc là thứ mình yêu thích nhất.",
         "color": 0x8BC34A,
         "info": "Bassist của Leo/need.",
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/e/eb/Happy_Birthday%21%21_2025_%28Shiho%29.png/revision/latest/scale-to-width-down/1000?cb=20250107164523"
     }
 }
 
@@ -249,7 +249,7 @@ VBS_CHARACTERS = {
             "Một cô gái nhút nhát nhưng rất yêu âm nhạc."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/e/ef/Happy_Birthday%21%21_2025_%28Kohane%29.png/revision/latest/scale-to-width-down/1000?cb=20250301150608"
     },
 
     "an": {
@@ -264,7 +264,7 @@ VBS_CHARACTERS = {
             "Con gái của chủ quán cà phê WEEKEND GARAGE."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/8/83/Happy_Birthday%21%21_2025_%28An%29.png/revision/latest/scale-to-width-down/1000?cb=20250725194454"
     },
 
     "akito": {
@@ -279,7 +279,7 @@ VBS_CHARACTERS = {
             "Em trai của Ena Shinonome."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/b/b7/Happy_Birthday%21%21_2024_%28Akito%29.png/revision/latest/scale-to-width-down/1000?cb=20241111150004"
     },
 
     "toya": {
@@ -294,7 +294,7 @@ VBS_CHARACTERS = {
             "Từng được đào tạo piano cổ điển."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/b/b4/Happy_Birthday%21%21_2025_%28Toya%29.png/revision/latest/scale-to-width-down/1000?cb=20250524150009"
     }
 }
 
@@ -316,7 +316,7 @@ WXS_CHARACTERS = {
             "Anh trai của Saki Tenma."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/5/5e/Happy_Birthday%21%21_2025_%28Tsukasa%29.png/revision/latest/scale-to-width-down/1000?cb=20250516150034"
     },
 
     "emu": {
@@ -331,7 +331,7 @@ WXS_CHARACTERS = {
             "Luôn tràn đầy năng lượng và niềm vui."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/3/32/Happy_Birthday%21%21_2025_%28Emu%29.png/revision/latest/scale-to-width-down/1000?cb=20250908165852"
     },
 
     "nene": {
@@ -346,7 +346,7 @@ WXS_CHARACTERS = {
             "Yêu thích game và hát rất hay."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/c/c6/Happy_Birthday%21%21_2025_%28Nene%29.png/revision/latest/scale-to-width-down/1000?cb=20250719150017"
     },
 
     "rui": {
@@ -361,7 +361,7 @@ WXS_CHARACTERS = {
             "Thiên tài sáng tạo."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/e/eb/Happy_Birthday%21%21_2025_%28Rui%29.png/revision/latest/scale-to-width-down/1000?cb=20250623150053"
     }
 }
 
@@ -382,7 +382,7 @@ N25_CHARACTERS = {
             "Người sáng tác nhạc của Nightcord at 25:00."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/4/4d/Happy_Birthday%21%21_2025_%28Kanade%29.png/revision/latest/scale-to-width-down/1000?cb=20250209154738"
     },
 
     "mafuyu": {
@@ -397,7 +397,7 @@ N25_CHARACTERS = {
             "Một học sinh ưu tú với nhiều áp lực."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/9/90/Happy_Birthday%21%21_2025_%28Mafuyu%29.png/revision/latest/scale-to-width-down/1000?cb=20250126150006"
     },
 
     "ena": {
@@ -412,7 +412,7 @@ N25_CHARACTERS = {
             "Chị gái của Akito Shinonome."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/8/88/Happy_Birthday%21%21_2025_%28Ena%29.png/revision/latest/scale-to-width-down/1000?cb=20250429150013"
     },
 
     "mizuki": {
@@ -427,7 +427,7 @@ N25_CHARACTERS = {
             "Chuyên thiết kế trang phục và phụ kiện."
         ),
 
-        "image": ""
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/2/2d/Happy_Birthday%21%21_2025_%28Mizuki%29.png/revision/latest/scale-to-width-down/1000?cb=20250826153012"
     }
 }
 
