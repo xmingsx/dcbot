@@ -38,12 +38,152 @@ MINORI = "<:Minori_Hehehe:1509935548863742002>"
 # DỮ LIỆU NHÂN VẬT
 # =========================
 
-CHARACTERS = {
+# =========================
+# Virtual Singer
+# =========================
+
+VS_CHARACTERS = {
+
+    "miku": {
+        "name": "🎤 Hatsune Miku",
+        "unit": "Virtual Singer",
+        "birthday": "31/08",
+        "quote": "Hãy cùng tạo nên âm nhạc nhé!",
+        "color": 0x39C5BB,
+        "info": (
+            "Ca sĩ ảo nổi tiếng nhất thế giới.\n"
+            "Xuất hiện trong nhiều SEKAI khác nhau."
+        ),
+        "image": ""
+    },
+
+    "luka": {
+        "name": "💗 Megurine Luka",
+        "unit": "Virtual Singer",
+        "birthday": "30/01",
+        "quote": "Âm nhạc luôn kết nối mọi người.",
+        "color": 0xF6A4C9,
+        "info": (
+            "Virtual Singer trưởng thành và dịu dàng."
+        ),
+        "image": ""
+    },
+
+    "meiko": {
+        "name": "🍷 MEIKO",
+        "unit": "Virtual Singer",
+        "birthday": "05/11",
+        "quote": "Hãy tự tin tiến về phía trước.",
+        "color": 0xD84B4B,
+        "info": (
+            "Virtual Singer đáng tin cậy."
+        ),
+        "image": ""
+    },
+
+    "rin": {
+        "name": "🍊 Kagamine Rin",
+        "unit": "Virtual Singer",
+        "birthday": "27/12",
+        "quote": "Cùng vui vẻ nào!",
+        "color": 0xFFD54F,
+        "info": (
+            "Một nửa của bộ đôi Kagamine."
+        ),
+        "image": ""
+    },
+
+    "len": {
+        "name": "🍌 Kagamine Len",
+        "unit": "Virtual Singer",
+        "birthday": "27/12",
+        "quote": "Mình sẽ cố gắng hết sức!",
+        "color": 0xF9E64F,
+        "info": (
+            "Một nửa của bộ đôi Kagamine."
+        ),
+        "image": ""
+    },
+
+    "kaito": {
+        "name": "🧣 KAITO",
+        "unit": "Virtual Singer",
+        "birthday": "17/02",
+        "quote": "Đừng lo, mọi chuyện sẽ ổn thôi.",
+        "color": 0x4F7FFF,
+        "info": (
+            "Virtual Singer đáng tin cậy."
+        ),
+        "image": ""
+    }
+}
+
+# =========================
+# Leo/need
+# =========================
+
+LN_CHARACTERS = {
+
+    "ichika": {
+        "name": "🎸 Ichika Hoshino",
+        "unit": "Leo/need",
+        "birthday": "11/08",
+        "quote": "Mình muốn truyền tải cảm xúc qua âm nhạc.",
+        "color": 0x33A1FF,
+        "info": "Guitarist và vocalist của Leo/need.",
+        "image": ""
+    },
+
+    "saki": {
+        "name": "⭐ Saki Tenma",
+        "unit": "Leo/need",
+        "birthday": "09/05",
+        "quote": "Mỗi ngày đều thật tuyệt vời!",
+        "color": 0xFFE066,
+        "info": (
+            "Keyboardist của Leo/need.\n"
+            "Em gái của Tsukasa Tenma."
+        ),
+        
+        "image": ""
+    },
+
+    "honami": {
+        "name": "🥁 Honami Mochizuki",
+        "unit": "Leo/need",
+        "birthday": "27/10",
+        "quote": "Mình muốn giúp đỡ mọi người.",
+        "color": 0xF4B183,
+        "info": "Drummer của Leo/need.",
+        "image": ""
+    },
+
+    "shiho": {
+        "name": "🎸 Shiho Hinomori",
+        "unit": "Leo/need",
+        "birthday": "08/01",
+        "quote": "Âm nhạc là thứ mình yêu thích nhất.",
+        "color": 0x8BC34A,
+        "info": "Bassist của Leo/need.",
+        "image": ""
+    }
+}
+
+# =========================
+# MORE MORE JUMP!
+# =========================
+
+MMJ_CHARACTERS = {
+
     "minori": {
         "name": "🌼 Minori Hanasato",
+        "unit": "MORE MORE JUMP!",
+        "birthday": "14/04",
+        "quote": "Mình sẽ cố gắng hết sức!",
+        "color": 0xF8BBD0,
         "info": (
             "Học sinh năm hai tại Miyamasuzaka Girls Academy.\n"
-            "Thành viên nhóm idol MORE MORE JUMP!.\n"
+            "Thành viên MORE MORE JUMP!.\n"
             "Là một cô gái luôn cố gắng hết mình để theo đuổi ước mơ."
         ),
         "image": "https://static.wikia.nocookie.net/projectsekai/images/d/d0/Happy_Birthday%21%21_2025_%28Minori%29.png/revision/latest/scale-to-width-down/1000?cb=20250413150129"
@@ -51,6 +191,10 @@ CHARACTERS = {
 
     "haruka": {
         "name": "🐧 Haruka Kiritani",
+        "unit": "MORE MORE JUMP!",
+        "birthday": "05/10",
+        "quote": "Mình sẽ tiếp tục tiến về phía trước.",
+        "color": 0x6EC6FF,
         "info": (
             "Học sinh năm hai tại Miyamasuzaka Girls Academy.\n"
             "Thành viên MORE MORE JUMP!.\n"
@@ -61,6 +205,10 @@ CHARACTERS = {
 
     "airi": {
         "name": "🍑 Airi Momoi",
+        "unit": "MORE MORE JUMP!",
+        "birthday": "19/03",
+        "quote": "Đừng đánh giá thấp thần tượng nhé!",
+        "color": 0xFF9EAA,
         "info": (
             "Học sinh năm ba tại Miyamasuzaka Girls Academy.\n"
             "Thành viên MORE MORE JUMP!.\n"
@@ -69,26 +217,229 @@ CHARACTERS = {
         "image": "https://static.wikia.nocookie.net/projectsekai/images/7/70/Happy_Birthday%21%21_2025_%28Airi%29.png/revision/latest/scale-to-width-down/1000?cb=20250318150009"
     },
 
-    "hinomori": {
+    "shizuku": {
         "name": "💧 Shizuku Hinomori",
+        "unit": "MORE MORE JUMP!",
+        "birthday": "06/12",
+        "quote": "Mình muốn giúp đỡ mọi người.",
+        "color": 0x7CD4FF,
         "info": (
             "Học sinh năm ba tại Miyamasuzaka Girls Academy.\n"
             "Thành viên MORE MORE JUMP!.\n"
             "Người chị dịu dàng và luôn quan tâm đến mọi người."
         ),
         "image": "https://static.wikia.nocookie.net/projectsekai/images/3/39/Happy_Birthday%21%21_2024_%28Shizuku%29.png/revision/latest/scale-to-width-down/1000?cb=20241205150501"
-    },
-
-    "saki": {
-        "name": "⭐ Saki Tenma",
-        "info": (
-            "Học sinh năm hai tại Miyamasuzaka Girls Academy.\n"
-            "Thành viên Leo/need.\n"
-            "Luôn vui vẻ và mang lại năng lượng tích cực."
-        ),
-        "image": "https://static.wikia.nocookie.net/projectsekai/images/e/e8/Happy_Birthday%21%21_2025_%28Saki%29.png/revision/latest/scale-to-width-down/1000?cb=20250508150430"
     }
 }
+# =========================
+# Vivid BAD SQUAD
+# =========================
+
+VBS_CHARACTERS = {
+
+    "kohane": {
+        "name": "🐹 Kohane Azusawa",
+        "unit": "Vivid BAD SQUAD",
+        "birthday": "02/03",
+        "quote": "Mình muốn hát cùng mọi người.",
+        "color": 0xFFB74D,
+
+        "info": (
+            "Thành viên Vivid BAD SQUAD.\n"
+            "Một cô gái nhút nhát nhưng rất yêu âm nhạc."
+        ),
+
+        "image": ""
+    },
+
+    "an": {
+        "name": "🎧 An Shiraishi",
+        "unit": "Vivid BAD SQUAD",
+        "birthday": "26/07",
+        "quote": "Hãy cho cả thế giới thấy âm nhạc của chúng ta!",
+        "color": 0x4FC3F7,
+
+        "info": (
+            "Thành viên Vivid BAD SQUAD.\n"
+            "Con gái của chủ quán cà phê WEEKEND GARAGE."
+        ),
+
+        "image": ""
+    },
+
+    "akito": {
+        "name": "🍊 Akito Shinonome",
+        "unit": "Vivid BAD SQUAD",
+        "birthday": "12/11",
+        "quote": "Tôi sẽ vượt qua bất kỳ giới hạn nào.",
+        "color": 0xFF8A65,
+
+        "info": (
+            "Thành viên Vivid BAD SQUAD.\n"
+            "Em trai của Ena Shinonome."
+        ),
+
+        "image": ""
+    },
+
+    "toya": {
+        "name": "☕ Toya Aoyagi",
+        "unit": "Vivid BAD SQUAD",
+        "birthday": "25/05",
+        "quote": "Tôi muốn tự chọn con đường của mình.",
+        "color": 0x64B5F6,
+
+        "info": (
+            "Thành viên Vivid BAD SQUAD.\n"
+            "Từng được đào tạo piano cổ điển."
+        ),
+
+        "image": ""
+    }
+}
+
+# =========================
+# Wonderlands x Showtime
+# =========================
+
+WXS_CHARACTERS = {
+
+    "tsukasa": {
+        "name": "🌟 Tsukasa Tenma",
+        "unit": "Wonderlands x Showtime",
+        "birthday": "17/05",
+        "quote": "Ta sẽ trở thành ngôi sao sáng nhất!",
+        "color": 0xFFD54F,
+
+        "info": (
+            "Trưởng nhóm Wonderlands x Showtime.\n"
+            "Anh trai của Saki Tenma."
+        ),
+
+        "image": ""
+    },
+
+    "emu": {
+        "name": "🍬 Emu Otori",
+        "unit": "Wonderlands x Showtime",
+        "birthday": "09/09",
+        "quote": "Wonderhoy~!",
+        "color": 0xFF80AB,
+
+        "info": (
+            "Thành viên Wonderlands x Showtime.\n"
+            "Luôn tràn đầy năng lượng và niềm vui."
+        ),
+
+        "image": ""
+    },
+
+    "nene": {
+        "name": "🎮 Nene Kusanagi",
+        "unit": "Wonderlands x Showtime",
+        "birthday": "20/07",
+        "quote": "Mình sẽ cố gắng hết sức.",
+        "color": 0x81C784,
+
+        "info": (
+            "Thành viên Wonderlands x Showtime.\n"
+            "Yêu thích game và hát rất hay."
+        ),
+
+        "image": ""
+    },
+
+    "rui": {
+        "name": "🎈 Rui Kamishiro",
+        "unit": "Wonderlands x Showtime",
+        "birthday": "24/06",
+        "quote": "Ý tưởng thú vị vừa xuất hiện rồi.",
+        "color": 0xBA68C8,
+
+        "info": (
+            "Đạo diễn sân khấu của Wonderlands x Showtime.\n"
+            "Thiên tài sáng tạo."
+        ),
+
+        "image": ""
+    }
+}
+
+# =========================
+# Nightcord at 25:00
+# =========================
+
+N25_CHARACTERS = {
+
+    "kanade": {
+        "name": "🎼 Kanade Yoisaki",
+        "unit": "Nightcord at 25:00",
+        "birthday": "10/02",
+        "quote": "Mình muốn cứu ai đó bằng âm nhạc.",
+        "color": 0xB39DDB,
+
+        "info": (
+            "Người sáng tác nhạc của Nightcord at 25:00."
+        ),
+
+        "image": ""
+    },
+
+    "mafuyu": {
+        "name": "❄️ Mafuyu Asahina",
+        "unit": "Nightcord at 25:00",
+        "birthday": "27/01",
+        "quote": "Mình thật sự là ai...?",
+        "color": 0x90CAF9,
+
+        "info": (
+            "Thành viên Nightcord at 25:00.\n"
+            "Một học sinh ưu tú với nhiều áp lực."
+        ),
+
+        "image": ""
+    },
+
+    "ena": {
+        "name": "🎨 Ena Shinonome",
+        "unit": "Nightcord at 25:00",
+        "birthday": "30/04",
+        "quote": "Tôi muốn mọi người công nhận mình.",
+        "color": 0xF48FB1,
+
+        "info": (
+            "Thành viên Nightcord at 25:00.\n"
+            "Chị gái của Akito Shinonome."
+        ),
+
+        "image": ""
+    },
+
+    "mizuki": {
+        "name": "🎀 Mizuki Akiyama",
+        "unit": "Nightcord at 25:00",
+        "birthday": "27/08",
+        "quote": "Hãy sống đúng với bản thân nhé.",
+        "color": 0xCE93D8,
+
+        "info": (
+            "Thành viên Nightcord at 25:00.\n"
+            "Chuyên thiết kế trang phục và phụ kiện."
+        ),
+
+        "image": ""
+    }
+}
+
+CHARACTERS = {}
+
+CHARACTERS.update(VS_CHARACTERS)
+CHARACTERS.update(LN_CHARACTERS)
+CHARACTERS.update(MMJ_CHARACTERS)
+CHARACTERS.update(VBS_CHARACTERS)
+CHARACTERS.update(WXS_CHARACTERS)
+CHARACTERS.update(N25_CHARACTERS)
+
 
 # =========================
 # DỮ LIỆU BÀI HÁT
@@ -661,44 +1012,106 @@ async def loi_chuc_thi_cu(interaction: discord.Interaction):
 # /NHAN_VAT
 # =========================
 
+@app_commands.choices(
+    nhan_vat=[
+
+        # Virtual Singer
+        app_commands.Choice(name="🎤 Hatsune Miku", value="miku"),
+        app_commands.Choice(name="💗 Megurine Luka", value="luka"),
+        app_commands.Choice(name="🍷 MEIKO", value="meiko"),
+        app_commands.Choice(name="🍊 Kagamine Rin", value="rin"),
+        app_commands.Choice(name="🍌 Kagamine Len", value="len"),
+        app_commands.Choice(name="🧣 KAITO", value="kaito"),
+
+        # Leo/need
+        app_commands.Choice(name="🎸 Ichika Hoshino", value="ichika"),
+        app_commands.Choice(name="⭐ Saki Tenma", value="saki"),
+        app_commands.Choice(name="🥁 Honami Mochizuki", value="honami"),
+        app_commands.Choice(name="🎸 Shiho Hinomori", value="shiho"),
+
+        # MMJ
+        app_commands.Choice(name="🌼 Minori Hanasato", value="minori"),
+        app_commands.Choice(name="🐧 Haruka Kiritani", value="haruka"),
+        app_commands.Choice(name="🍑 Airi Momoi", value="airi"),
+        app_commands.Choice(name="💧 Shizuku Hinomori", value="shizuku"),
+
+        # VBS
+        app_commands.Choice(name="🐹 Kohane Azusawa", value="kohane"),
+        app_commands.Choice(name="🎧 An Shiraishi", value="an"),
+        app_commands.Choice(name="🍊 Akito Shinonome", value="akito"),
+        app_commands.Choice(name="☕ Toya Aoyagi", value="toya"),
+
+        # WxS
+        app_commands.Choice(name="🌟 Tsukasa Tenma", value="tsukasa"),
+        app_commands.Choice(name="🍬 Emu Otori", value="emu"),
+        app_commands.Choice(name="🎮 Nene Kusanagi", value="nene"),
+        app_commands.Choice(name="🎈 Rui Kamishiro", value="rui"),
+
+        # N25
+        app_commands.Choice(name="🎼 Kanade Yoisaki", value="kanade"),
+        app_commands.Choice(name="❄️ Mafuyu Asahina", value="mafuyu"),
+        app_commands.Choice(name="🎨 Ena Shinonome", value="ena"),
+        app_commands.Choice(name="🎀 Mizuki Akiyama", value="mizuki")
+    ]
+)
+
 @bot.tree.command(
     name="nhan_vat",
     description="Xem thông tin nhân vật"
 )
-@app_commands.choices(
-    nhan_vat=[
-        app_commands.Choice(name="Minori Hanasato", value="minori"),
-        app_commands.Choice(name="Haruka Kiritani", value="haruka"),
-        app_commands.Choice(name="Airi Momoi", value="airi"),
-        app_commands.Choice(name="Shizuku Hinomori", value="hinomori"),
-        app_commands.Choice(name="Saki Tenma", value="saki")
-    ]
-)
+
 async def nhan_vat(
     interaction: discord.Interaction,
     nhan_vat: app_commands.Choice[str]
 ):
+
+    if nhan_vat.value not in CHARACTERS:
+
+        await interaction.response.send_message(
+            "❌ Nhân vật này chưa có dữ liệu.",
+            ephemeral=True
+        )
+        return
 
     char = CHARACTERS[nhan_vat.value]
 
     embed = discord.Embed(
         title=char["name"],
         description=char["info"],
-        color=0xF0B85A
+        color=char["color"]
     )
 
-    embed.set_image(
-        url=char["image"]
+    embed.add_field(
+        name="🎤 Unit",
+        value=char["unit"],
+        inline=True
     )
+
+    embed.add_field(
+        name="🎂 Birthday",
+        value=char["birthday"],
+        inline=True
+    )
+
+    embed.add_field(
+        name="💖 Quote",
+        value=char["quote"],
+        inline=False
+    )
+
+    if char["image"]:
+
+        embed.set_image(
+            url=char["image"]
+        )
 
     embed.set_footer(
-        text="Information by Project Sekai Wiki"
+        text="Project SEKAI Character Information"
     )
 
     await interaction.response.send_message(
         embed=embed
     )
-
 # =========================
 # /PROFILE
 # =========================
