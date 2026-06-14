@@ -1012,60 +1012,18 @@ async def loi_chuc_thi_cu(interaction: discord.Interaction):
 # /NHAN_VAT
 # =========================
 
-@app_commands.choices(
-    nhan_vat=[
-
-        # Virtual Singer
-        app_commands.Choice(name="🎤 Hatsune Miku", value="miku"),
-        app_commands.Choice(name="💗 Megurine Luka", value="luka"),
-        app_commands.Choice(name="🍷 MEIKO", value="meiko"),
-        app_commands.Choice(name="🍊 Kagamine Rin", value="rin"),
-        app_commands.Choice(name="🍌 Kagamine Len", value="len"),
-        app_commands.Choice(name="🧣 KAITO", value="kaito"),
-
-        # Leo/need
-        app_commands.Choice(name="🎸 Ichika Hoshino", value="ichika"),
-        app_commands.Choice(name="⭐ Saki Tenma", value="saki"),
-        app_commands.Choice(name="🥁 Honami Mochizuki", value="honami"),
-        app_commands.Choice(name="🎸 Shiho Hinomori", value="shiho"),
-
-        # MMJ
-        app_commands.Choice(name="🌼 Minori Hanasato", value="minori"),
-        app_commands.Choice(name="🐧 Haruka Kiritani", value="haruka"),
-        app_commands.Choice(name="🍑 Airi Momoi", value="airi"),
-        app_commands.Choice(name="💧 Shizuku Hinomori", value="shizuku"),
-
-        # VBS
-        app_commands.Choice(name="🐹 Kohane Azusawa", value="kohane"),
-        app_commands.Choice(name="🎧 An Shiraishi", value="an"),
-        app_commands.Choice(name="🍊 Akito Shinonome", value="akito"),
-        app_commands.Choice(name="☕ Toya Aoyagi", value="toya"),
-
-        # WxS
-        app_commands.Choice(name="🌟 Tsukasa Tenma", value="tsukasa"),
-        app_commands.Choice(name="🍬 Emu Otori", value="emu"),
-        app_commands.Choice(name="🎮 Nene Kusanagi", value="nene"),
-        app_commands.Choice(name="🎈 Rui Kamishiro", value="rui"),
-
-        # N25
-        app_commands.Choice(name="🎼 Kanade Yoisaki", value="kanade"),
-        app_commands.Choice(name="❄️ Mafuyu Asahina", value="mafuyu"),
-        app_commands.Choice(name="🎨 Ena Shinonome", value="ena"),
-        app_commands.Choice(name="🎀 Mizuki Akiyama", value="mizuki")
-    ]
-)
-
 @bot.tree.command(
     name="nhan_vat",
     description="Xem thông tin nhân vật"
 )
-
 async def nhan_vat(
     interaction: discord.Interaction,
-    nhan_vat: app_commands.Choice[str]
+    nhan_vat: str
 ):
 
-    if nhan_vat.value not in CHARACTERS:
+    nhan_vat = nhan_vat.lower()
+
+    if nhan_vat not in CHARACTERS:
 
         await interaction.response.send_message(
             "❌ Nhân vật này chưa có dữ liệu.",
@@ -1073,7 +1031,7 @@ async def nhan_vat(
         )
         return
 
-    char = CHARACTERS[nhan_vat.value]
+    char = CHARACTERS[nhan_vat]
 
     embed = discord.Embed(
         title=char["name"],
@@ -1100,10 +1058,7 @@ async def nhan_vat(
     )
 
     if char["image"]:
-
-        embed.set_image(
-            url=char["image"]
-        )
+        embed.set_image(url=char["image"])
 
     embed.set_footer(
         text="Project SEKAI Character Information"
@@ -1112,6 +1067,28 @@ async def nhan_vat(
     await interaction.response.send_message(
         embed=embed
     )
+
+@nhan_vat.autocomplete("nhan_vat")
+async def nhan_vat_autocomplete(
+    interaction: discord.Interaction,
+    current: str
+):
+
+    choices = []
+
+    for key, data in CHARACTERS.items():
+
+        if current.lower() in data["name"].lower():
+
+            choices.append(
+                app_commands.Choice(
+                    name=data["name"],
+                    value=key
+                )
+            )
+
+    return choices[:25]
+
 # =========================
 # /PROFILE
 # =========================
