@@ -186,8 +186,26 @@ MMJ_CHARACTERS = {
             "Thành viên MORE MORE JUMP!.\n"
             "Là một cô gái luôn cố gắng hết mình để theo đuổi ước mơ."
         ),
-        "image": "https://static.wikia.nocookie.net/projectsekai/images/d/d0/Happy_Birthday%21%21_2025_%28Minori%29.png/revision/latest/scale-to-width-down/1000?cb=20250413150129"
-    },
+    "images": [
+        "https://static.wikia.nocookie.net/projectsekai/images/d/d0/Happy_Birthday%21%21_2025_%28Minori%29.png/revision/latest/scale-to-width-down/1000?cb=20250413150129",
+        "https://static.wikia.nocookie.net/projectsekai/images/b/be/Glittering_Idol%21_T.png/revision/latest/scale-to-width-down/1000?cb=20250930030051",
+        "https://static.wikia.nocookie.net/projectsekai/images/8/81/Each_Dream_Weaves_Another_T.png/revision/latest/scale-to-width-down/1000?cb=20240102194222",
+        "https://static.wikia.nocookie.net/projectsekai/images/5/53/Blessings_From_My_Friends_T.png/revision/latest/scale-to-width-down/1000?cb=20211001233144",
+        "https://static.wikia.nocookie.net/projectsekai/images/2/2f/Happy_Birthday%21%21_2024_%28Minori%29.png/revision/latest/scale-to-width-down/1000?cb=20240413152651",
+        "https://static.wikia.nocookie.net/projectsekai/images/b/bf/Happy_Birthday%21%21_%28Minori%29.png/revision/latest/scale-to-width-down/1000?cb=20220413232810",
+        "https://static.wikia.nocookie.net/projectsekai/images/2/20/All_I%27ve_Felt_T.png/revision/latest/scale-to-width-down/1000?cb=20240509060114",
+        "https://static.wikia.nocookie.net/projectsekai/images/8/87/My_First_Vocal_Range_Check%21_T.png/revision/latest/scale-to-width-down/1000?cb=20220430031809",
+        "https://static.wikia.nocookie.net/projectsekai/images/4/4c/Watch_Me_Transform%21_T.png/revision/latest/scale-to-width-down/1000?cb=20240531050532",
+        "https://static.wikia.nocookie.net/projectsekai/images/6/63/Falling_With_Honor_T.png/revision/latest/scale-to-width-down/1000?cb=20220630031857",
+        "https://static.wikia.nocookie.net/projectsekai/images/5/55/I%27m_Gonna_Lose_My_Head%21_T.png/revision/latest/scale-to-width-down/1000?cb=20221031030101",
+        "https://static.wikia.nocookie.net/projectsekai/images/e/ed/The_Dreams_That_Get_Lost_In_The_Crowd_T.png/revision/latest/scale-to-width-down/1000?cb=20250808032731",
+        "https://static.wikia.nocookie.net/projectsekai/images/7/7d/Happy_Birthday%21%21_2023_%28Minori%29.png/revision/latest/scale-to-width-down/1000?cb=20230415090351",
+        "https://static.wikia.nocookie.net/projectsekai/images/8/81/Dance_Of_Wishes_T.png/revision/latest/scale-to-width-down/1000?cb=20251231030116",
+        "https://static.wikia.nocookie.net/projectsekai/images/a/a7/Watching_Her_Back_T.png/revision/latest/scale-to-width-down/1000?cb=20230930061929",
+        "https://static.wikia.nocookie.net/projectsekai/images/c/c0/Happy_Birthday%21%21_2026_%28Minori%29.png/revision/latest/scale-to-width-down/1000?cb=20260409150209",
+        "https://static.wikia.nocookie.net/projectsekai/images/5/55/Fervor_Coaching%21%3F_T.png/revision/latest/scale-to-width-down/1000?cb=20260517030712"
+    ]
+},
 
     "haruka": {
         "name": "🐧 Haruka Kiritani",
@@ -744,7 +762,7 @@ async def gioi_thieu(interaction: discord.Interaction):
     )
 
     embed.set_thumbnail(
-        url=CHARACTERS["minori"]["image"]
+        url=CHARACTERS["minori"]["images"][0]
     )
 
     embed.set_footer(
@@ -875,7 +893,7 @@ async def loi_chao(interaction: discord.Interaction):
     )
 
     embed.set_thumbnail(
-        url=CHARACTERS["minori"]["image"]
+        url=CHARACTERS["minori"]["images"][0]
     )
 
     embed.set_footer(
@@ -1009,6 +1027,103 @@ async def loi_chuc_thi_cu(interaction: discord.Interaction):
     )
 
 # =========================
+# CHARACTER IMAGE VIEW
+# =========================
+
+class CharacterImageView(discord.ui.View):
+
+    def __init__(self, char):
+        super().__init__(timeout=120)
+
+        self.char = char
+        self.index = 0
+
+    def make_embed(self):
+
+        embed = discord.Embed(
+            title=self.char["name"],
+            description=self.char["info"],
+            color=self.char["color"]
+        )
+
+        embed.add_field(
+            name="🎤 Unit",
+            value=self.char["unit"]
+        )
+
+        embed.add_field(
+            name="🎂 Birthday",
+            value=self.char["birthday"]
+        )
+
+        embed.add_field(
+            name="💖 Quote",
+            value=self.char["quote"],
+            inline=False
+        )
+
+        images = self.char.get("images", [])
+
+        if images:
+            embed.set_image(
+                url=images[self.index]
+            )
+
+        if images:
+            embed.set_footer(
+                text=f"Ảnh {self.index+1}/{len(images)}"
+            )
+        else:
+            embed.set_footer(
+                text="Project SEKAI Character Information"
+            )
+        return embed
+
+    @discord.ui.button(
+        emoji="⬅️",
+        style=discord.ButtonStyle.secondary
+    )
+    async def previous(
+        self,
+        interaction: discord.Interaction,
+        button: discord.ui.Button
+    ):
+
+        self.index -= 1
+
+        if self.index < 0:
+            self.index = len(self.char["images"]) - 1
+
+        await interaction.response.edit_message(
+            embed=self.make_embed(),
+            view=self
+        )
+
+    @discord.ui.button(
+        emoji="➡️",
+        style=discord.ButtonStyle.secondary
+    )
+    async def next(
+        self,
+        interaction: discord.Interaction,
+        button: discord.ui.Button
+    ):
+
+        self.index += 1
+
+        if self.index >= len(self.char["images"]):
+            self.index = 0
+
+        await interaction.response.edit_message(
+            embed=self.make_embed(),
+            view=self
+        )
+
+# =========================
+# /NHAN_VAT
+# =========================
+
+# =========================
 # /NHAN_VAT
 # =========================
 
@@ -1057,16 +1172,42 @@ async def nhan_vat(
         inline=False
     )
 
-    if char["image"]:
-        embed.set_image(url=char["image"])
-
     embed.set_footer(
         text="Project SEKAI Character Information"
     )
 
-    await interaction.response.send_message(
-        embed=embed
-    )
+    images = char.get("images")
+
+    if not images and "image" in char:
+        images = [char["image"]]
+
+    if not images:
+        images = []
+
+    if images:
+
+        embed.set_image(
+            url=images[0]
+        )
+
+        if len(images) > 1:
+
+            await interaction.response.send_message(
+                embed=embed,
+                view=CharacterImageView(char)
+            )
+
+        else:
+
+            await interaction.response.send_message(
+                embed=embed
+            )
+
+    else:
+
+        await interaction.response.send_message(
+            embed=embed
+        )
 
 @nhan_vat.autocomplete("nhan_vat")
 async def nhan_vat_autocomplete(
