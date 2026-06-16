@@ -1197,10 +1197,6 @@ async def nhan_vat(
         inline=False
     )
 
-    embed.set_footer(
-        text="Project SEKAI Character Information"
-    )
-
     images = char.get("images")
 
     if not images and "image" in char:
