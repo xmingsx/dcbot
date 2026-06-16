@@ -1211,18 +1211,20 @@ async def nhan_vat(
 
     if images:
 
-        embed.set_image(
-            url=images[0]
-        )
-
         if len(images) > 1:
 
+            view = CharacterImageView(char)
+
             await interaction.response.send_message(
-                embed=embed,
-                view=CharacterImageView(char)
+                embed=view.make_embed(),
+                view=view
             )
 
         else:
+
+            embed.set_image(
+                url=images[0]
+            )
 
             await interaction.response.send_message(
                 embed=embed
