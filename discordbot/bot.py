@@ -690,7 +690,7 @@ async def on_ready():
     await bot.change_presence(
         status=discord.Status.idle,
         activity=discord.CustomActivity(
-            "💖 Xong hết rồi, TÀY to rồi"
+            "💖 Chưa làm gacha command được, không TÀY rồi :( "
         )
     )
 
