@@ -204,6 +204,25 @@ MMJ_CHARACTERS = {
         "https://static.wikia.nocookie.net/projectsekai/images/a/a7/Watching_Her_Back_T.png/revision/latest/scale-to-width-down/1000?cb=20230930061929",
         "https://static.wikia.nocookie.net/projectsekai/images/c/c0/Happy_Birthday%21%21_2026_%28Minori%29.png/revision/latest/scale-to-width-down/1000?cb=20260409150209",
         "https://static.wikia.nocookie.net/projectsekai/images/5/55/Fervor_Coaching%21%3F_T.png/revision/latest/scale-to-width-down/1000?cb=20260517030712"
+    ],
+     "captions": [
+        "🎂 Happy Birthday!! 2025",
+        "✨ Glittering Idol!",
+        "🌈 Each Dream Weaves Another",
+        "🎁 Blessings From My Friends",
+        "🎂 Happy Birthday!! 2024",
+        "🎂 Happy Birthday!!",
+        "💖 All I've Felt",
+        "🎤 My First Vocal Range Check!",
+        "✨ Watch Me Transform!",
+        "🎭 Falling With Honor",
+        "😵 I'm Gonna Lose My Head!",
+        "🌠 The Dreams That Get Lost In The Crowd",
+        "🎂 Happy Birthday!! 2023",
+        "💃 Dance Of Wishes",
+        "👀 Watching Her Back",
+        "🎂 Happy Birthday!! 2026",
+        "🔥 Fervor Coaching!?"
     ]
 },
 
@@ -1070,9 +1089,15 @@ class CharacterImageView(discord.ui.View):
             )
 
         if images:
-            embed.set_footer(
-                text=f"Ảnh {self.index+1}/{len(images)}"
-            )
+
+            captions = self.char.get("captions", [])
+
+            footer_text = f"Ảnh {self.index+1}/{len(images)}"
+
+            if self.index < len(captions):
+                footer_text += f" • {captions[self.index]}"
+
+            embed.set_footer(text=footer_text)
         else:
             embed.set_footer(
                 text="Project SEKAI Character Information"
@@ -1202,12 +1227,6 @@ async def nhan_vat(
             await interaction.response.send_message(
                 embed=embed
             )
-
-    else:
-
-        await interaction.response.send_message(
-            embed=embed
-        )
 
 @nhan_vat.autocomplete("nhan_vat")
 async def nhan_vat_autocomplete(
