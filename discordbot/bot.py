@@ -2,7 +2,7 @@ import os
 import random
 import traceback
 import discord
-import 
+import random
 import psycopg2
 
 from datetime import datetime, timezone, timedelta
