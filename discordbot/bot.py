@@ -477,6 +477,96 @@ CHARACTERS.update(VBS_CHARACTERS)
 CHARACTERS.update(WXS_CHARACTERS)
 CHARACTERS.update(N25_CHARACTERS)
 
+# =========================
+# CARDS
+# =========================
+
+CARDS = {
+
+    "minori_glittering_idol": {
+        "name": "✨ Glittering Idol!",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/b/be/Glittering_Idol%21_T.png/revision/latest/scale-to-width-down/1000?cb=20250930030051"
+    },
+
+    "minori_each_dream": {
+        "name": "🌈 Each Dream Weaves Another",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/8/81/Each_Dream_Weaves_Another_T.png/revision/latest/scale-to-width-down/1000?cb=20240102194222"
+    },
+
+    "minori_blessings": {
+        "name": "🎁 Blessings From My Friends",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/5/53/Blessings_From_My_Friends_T.png/revision/latest/scale-to-width-down/1000?cb=20211001233144"
+    },
+
+    "minori_all_ive_felt": {
+        "name": "💖 All I've Felt",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/2/20/All_I%27ve_Felt_T.png/revision/latest/scale-to-width-down/1000?cb=20240509060114"
+    },
+
+    "minori_vocal_range": {
+        "name": "🎤 My First Vocal Range Check!",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/8/87/My_First_Vocal_Range_Check%21_T.png/revision/latest/scale-to-width-down/1000?cb=20220430031809"
+    },
+
+    "minori_transform": {
+        "name": "✨ Watch Me Transform!",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/4/4c/Watch_Me_Transform%21_T.png/revision/latest/scale-to-width-down/1000?cb=20240531050532"
+    },
+
+    "minori_falling_honor": {
+        "name": "🎭 Falling With Honor",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/6/63/Falling_With_Honor_T.png/revision/latest/scale-to-width-down/1000?cb=20220630031857"
+    },
+
+    "minori_lose_my_head": {
+        "name": "😵 I'm Gonna Lose My Head!",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/5/55/I%27m_Gonna_Lose_My_Head%21_T.png/revision/latest/scale-to-width-down/1000?cb=20221031030101"
+    },
+
+    "minori_dreams_lost": {
+        "name": "🌠 The Dreams That Get Lost In The Crowd",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/e/ed/The_Dreams_That_Get_Lost_In_The_Crowd_T.png/revision/latest/scale-to-width-down/1000?cb=20250808032731"
+    },
+
+    "minori_dance_of_wishes": {
+        "name": "💃 Dance Of Wishes",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/8/81/Dance_Of_Wishes_T.png/revision/latest/scale-to-width-down/1000?cb=20251231030116"
+    },
+
+    "minori_watching_her_back": {
+        "name": "👀 Watching Her Back",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/a/a7/Watching_Her_Back_T.png/revision/latest/scale-to-width-down/1000?cb=20230930061929"
+    },
+
+    "minori_fervor_coaching": {
+        "name": "🔥 Fervor Coaching!?",
+        "character": "Minori Hanasato",
+        "rarity": 4,
+        "image": "https://static.wikia.nocookie.net/projectsekai/images/5/55/Fervor_Coaching%21%3F_T.png/revision/latest/scale-to-width-down/1000?cb=20260517030712"
+    }
+}
 
 # =========================
 # DỮ LIỆU BÀI HÁT
@@ -571,6 +661,15 @@ CREATE TABLE IF NOT EXISTS users (
 
 conn.commit()
 
+cur.execute("""
+CREATE TABLE IF NOT EXISTS cards (
+    id SERIAL PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    card_id TEXT NOT NULL
+)
+""")
+
+conn.commit()
 
 def get_user(user_id):
 
@@ -637,6 +736,31 @@ def update_user(user):
         ))
 
         conn.commit()
+def add_card(user_id, card_id):
+
+    check_connection()
+
+    cur.execute("""
+    INSERT INTO inventory (user_id, card_id)
+    VALUES (%s, %s)
+    """, (str(user_id), card_id))
+
+    conn.commit()
+
+
+def get_inventory(user_id):
+
+    check_connection()
+
+    cur.execute("""
+    SELECT card_id
+    FROM inventory
+    WHERE user_id = %s
+    """, (str(user_id),))
+
+    rows = cur.fetchall()
+
+    return [row[0] for row in rows]
 
     except Exception as e:
 
