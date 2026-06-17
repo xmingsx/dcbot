@@ -1710,7 +1710,6 @@ async def inventory(
     await interaction.response.send_message(
         embed=embed
     )
-```
 
 # =========================
 # /PLAY_SOLO
