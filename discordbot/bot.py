@@ -1295,8 +1295,81 @@ class CharacterImageView(discord.ui.View):
         )
 
 # =========================
-# /NHAN_VAT
 # =========================
+# INVENTORY SELECT
+# =========================
+
+class InventorySelect(discord.ui.Select):
+
+    def __init__(self, owned_cards):
+
+        options = []
+
+        for card_id in owned_cards:
+
+            if card_id not in CARDS:
+                continue
+
+            card = CARDS[card_id]
+
+            options.append(
+                discord.SelectOption(
+                    label=card["name"][:100],
+                    description=f"{card['rarity']} | {card['character']}"[:100],
+                    value=card_id
+                )
+            )
+
+        super().__init__(
+            placeholder="Chọn card để xem ảnh...",
+            options=options[:25]
+        )
+
+    async def callback(
+        self,
+        interaction: discord.Interaction
+    ):
+
+        card_id = self.values[0]
+
+        card = CARDS[card_id]
+
+        embed = discord.Embed(
+            title=card["name"],
+            description=(
+                f"{card['rarity']}\n"
+                f"{card['character']}"
+            ),
+            color=0xF0B85A
+        )
+
+        embed.set_image(
+            url=card["image"]
+        )
+
+        await interaction.response.edit_message(
+            embed=embed,
+            view=self.view
+        )
+
+
+# =========================
+# INVENTORY VIEW
+# =========================
+
+class InventoryView(discord.ui.View):
+
+    def __init__(self, owned_cards):
+
+        super().__init__(
+            timeout=300
+        )
+
+        self.add_item(
+            InventorySelect(
+                owned_cards
+            )
+        )
 
 # =========================
 # /NHAN_VAT
@@ -1682,24 +1755,11 @@ async def inventory(
         )
         return
 
-    lines = []
-
-    for card_id in owned_cards:
-
-        if card_id not in CARDS:
-            continue
-
-        card = CARDS[card_id]
-
-        lines.append(
-            f"⭐ {card['name']} | "
-            f"{card['rarity']} | "
-            f"{card['character']}"
-        )
-
     embed = discord.Embed(
         title=f"📦 Inventory của {interaction.user.display_name}",
-        description="\n".join(lines[:50]),
+        description=(
+            "Chọn một card bên dưới để xem ảnh."
+        ),
         color=0x4FC3F7
     )
 
@@ -1708,7 +1768,10 @@ async def inventory(
     )
 
     await interaction.response.send_message(
-        embed=embed
+        embed=embed,
+        view=InventoryView(
+            owned_cards
+        )
     )
 
 # =========================
