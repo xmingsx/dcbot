@@ -2,6 +2,7 @@ import os
 import random
 import traceback
 import discord
+import 
 import psycopg2
 
 from datetime import datetime, timezone, timedelta
@@ -648,6 +649,10 @@ def check_connection():
 
         cur = conn.cursor()
 
+# =========================
+# TẠO BẢNG USERS
+# =========================
+
 cur.execute("""
 CREATE TABLE IF NOT EXISTS users (
     user_id TEXT PRIMARY KEY,
@@ -661,6 +666,10 @@ CREATE TABLE IF NOT EXISTS users (
 
 conn.commit()
 
+# =========================
+# TẠO BẢNG CARDS
+# =========================
+
 cur.execute("""
 CREATE TABLE IF NOT EXISTS cards (
     id SERIAL PRIMARY KEY,
@@ -670,6 +679,7 @@ CREATE TABLE IF NOT EXISTS cards (
 """)
 
 conn.commit()
+
 
 def get_user(user_id):
 
@@ -741,7 +751,6 @@ def update_user(user):
     except Exception as e:
 
         print("Lỗi update_user:", e)
-        print("Đang kết nối lại PostgreSQL...")
 
         conn = psycopg2.connect(
             DATABASE_URL,
@@ -775,7 +784,7 @@ def add_card(user_id, card_id):
     check_connection()
 
     cur.execute("""
-    INSERT INTO inventory (user_id, card_id)
+    INSERT INTO cards (user_id, card_id)
     VALUES (%s, %s)
     """, (
         str(user_id),
@@ -791,7 +800,7 @@ def get_inventory(user_id):
 
     cur.execute("""
     SELECT card_id
-    FROM inventory
+    FROM cards
     WHERE user_id = %s
     """, (
         str(user_id),
@@ -800,6 +809,13 @@ def get_inventory(user_id):
     rows = cur.fetchall()
 
     return [row[0] for row in rows]
+
+
+def roll_card():
+
+    return random.choice(
+        list(CARDS.keys())
+    )
 
 # =========================
 # KHI BOT KHỞI ĐỘNG
@@ -1496,6 +1512,205 @@ async def daily(interaction: discord.Interaction):
 # =========================
 
 play_solo_cooldowns = {}
+
+```python
+# =========================
+# COOLDOWN /GACHA
+# =========================
+
+gacha_cooldowns = {}
+
+# =========================
+# /GACHA
+# =========================
+
+@app_commands.choices(
+    amount=[
+        app_commands.Choice(name="x1", value=1),
+        app_commands.Choice(name="x10", value=10)
+    ]
+)
+@bot.tree.command(
+    name="gacha",
+    description="Quay thẻ Project SEKAI"
+)
+async def gacha(
+    interaction: discord.Interaction,
+    amount: app_commands.Choice[int]
+):
+
+    user_id = interaction.user.id
+    now = datetime.now().timestamp()
+
+    if user_id in gacha_cooldowns:
+
+        remaining = (
+            gacha_cooldowns[user_id] - now
+        )
+
+        if remaining > 0:
+
+            await interaction.response.send_message(
+                f"⏳ Vui lòng chờ {remaining:.1f} giây trước khi quay tiếp.",
+                ephemeral=True
+            )
+            return
+
+    gacha_cooldowns[user_id] = now + 10
+
+    rolls = amount.value
+
+    cost = 300 * rolls
+
+    user = get_user(user_id)
+
+    if user["gems"] < cost:
+
+        await interaction.response.send_message(
+            f"❌ Bạn cần {cost} 💎 để quay gacha x{rolls}."
+        )
+        return
+
+    user["gems"] -= cost
+
+    inventory = get_inventory(user_id)
+
+    results = []
+    duplicate_count = 0
+
+    for _ in range(rolls):
+
+        card_id = roll_card()
+
+        if card_id in inventory:
+
+            duplicate_count += 1
+            user["gems"] += 150
+
+        else:
+
+            add_card(
+                user_id,
+                card_id
+            )
+
+            inventory.append(card_id)
+
+        results.append(card_id)
+
+    update_user(user)
+
+    result_text = ""
+
+    for card_id in results:
+
+        card = CARDS[card_id]
+
+        result_text += (
+            f"⭐ {card['name']}\n"
+            f"   {card['rarity']} • {card['character']}\n\n"
+        )
+
+    embed = discord.Embed(
+        title=f"🎊 Gacha x{rolls}",
+        description=result_text,
+        color=0xF0B85A
+    )
+
+    last_card = CARDS[
+        results[-1]
+    ]
+
+    embed.set_image(
+        url=last_card["image"]
+    )
+
+    embed.add_field(
+        name="💎 Đá đã tiêu",
+        value=str(cost),
+        inline=True
+    )
+
+    embed.add_field(
+        name="💎 Đá còn lại",
+        value=str(user["gems"]),
+        inline=True
+    )
+
+    if duplicate_count > 0:
+
+        embed.add_field(
+            name="♻️ Card trùng",
+            value=(
+                f"{duplicate_count} card\n"
+                f"+{duplicate_count * 150} 💎"
+            ),
+            inline=False
+        )
+
+    embed.set_footer(
+        text="Chúc bạn may mắn ở lần quay tiếp theo! ✨"
+    )
+
+    await interaction.response.send_message(
+        embed=embed
+    )
+```
+```python
+# =========================
+# /INVENTORY
+# =========================
+
+@bot.tree.command(
+    name="inventory",
+    description="Xem bộ sưu tập thẻ của bạn"
+)
+async def inventory(
+    interaction: discord.Interaction
+):
+
+    user_id = interaction.user.id
+
+    owned_cards = get_inventory(
+        user_id
+    )
+
+    if not owned_cards:
+
+        await interaction.response.send_message(
+            "📦 Bạn chưa sở hữu card nào."
+        )
+        return
+
+    lines = []
+
+    for card_id in owned_cards:
+
+        if card_id not in CARDS:
+            continue
+
+        card = CARDS[card_id]
+
+        lines.append(
+            f"⭐ {card['name']} | "
+            f"{card['rarity']} | "
+            f"{card['character']}"
+        )
+
+    embed = discord.Embed(
+        title=f"📦 Inventory của {interaction.user.display_name}",
+        description="\n".join(lines[:50]),
+        color=0x4FC3F7
+    )
+
+    embed.set_footer(
+        text=f"Tổng số card: {len(owned_cards)}"
+    )
+
+    await interaction.response.send_message(
+        embed=embed
+    )
+```
 
 # =========================
 # /PLAY_SOLO
