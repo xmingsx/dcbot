@@ -1656,8 +1656,7 @@ async def gacha(
     await interaction.response.send_message(
         embed=embed
     )
-```
-```python
+
 # =========================
 # /INVENTORY
 # =========================
