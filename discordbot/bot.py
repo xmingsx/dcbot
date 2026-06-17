@@ -716,6 +716,7 @@ def update_user(user):
     global conn, cur
 
     try:
+
         check_connection()
 
         cur.execute("""
@@ -736,31 +737,6 @@ def update_user(user):
         ))
 
         conn.commit()
-def add_card(user_id, card_id):
-
-    check_connection()
-
-    cur.execute("""
-    INSERT INTO inventory (user_id, card_id)
-    VALUES (%s, %s)
-    """, (str(user_id), card_id))
-
-    conn.commit()
-
-
-def get_inventory(user_id):
-
-    check_connection()
-
-    cur.execute("""
-    SELECT card_id
-    FROM inventory
-    WHERE user_id = %s
-    """, (str(user_id),))
-
-    rows = cur.fetchall()
-
-    return [row[0] for row in rows]
 
     except Exception as e:
 
@@ -792,6 +768,38 @@ def get_inventory(user_id):
         ))
 
         conn.commit()
+
+
+def add_card(user_id, card_id):
+
+    check_connection()
+
+    cur.execute("""
+    INSERT INTO inventory (user_id, card_id)
+    VALUES (%s, %s)
+    """, (
+        str(user_id),
+        card_id
+    ))
+
+    conn.commit()
+
+
+def get_inventory(user_id):
+
+    check_connection()
+
+    cur.execute("""
+    SELECT card_id
+    FROM inventory
+    WHERE user_id = %s
+    """, (
+        str(user_id),
+    ))
+
+    rows = cur.fetchall()
+
+    return [row[0] for row in rows]
 
 # =========================
 # KHI BOT KHỞI ĐỘNG
