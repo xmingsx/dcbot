@@ -14,6 +14,46 @@ from discord import app_commands
 from keep_alive import keep_alive
 
 # =========================
+# HÀM GHÉP 10 ẢNH GACHA
+# =========================
+
+def create_gacha_grid(results):
+    CARD_WIDTH = 250
+    CARD_HEIGHT = 350
+    COLS = 5
+    ROWS = 2
+
+    images = []
+
+    for card_key in results:
+        image_url = CARDS[card_key]["image"]
+
+        response = requests.get(image_url, timeout=10)
+        response.raise_for_status()
+
+        img = Image.open(BytesIO(response.content)).convert("RGBA")
+        img = img.resize((CARD_WIDTH, CARD_HEIGHT))
+
+        images.append(img)
+
+    canvas = Image.new(
+        "RGBA",
+        (CARD_WIDTH * COLS, CARD_HEIGHT * ROWS),
+        (0, 0, 0, 0)
+    )
+
+    for index, img in enumerate(images):
+        x = (index % COLS) * CARD_WIDTH
+        y = (index // COLS) * CARD_HEIGHT
+        canvas.paste(img, (x, y), img)
+
+    output = BytesIO()
+    canvas.save(output, format="PNG")
+    output.seek(0)
+
+    return output
+
+# =========================
 # KHỞI ĐỘNG WEB SERVER
 # =========================
 
@@ -1620,9 +1660,7 @@ async def gacha(
 
     if user_id in gacha_cooldowns:
 
-        remaining = (
-            gacha_cooldowns[user_id] - now
-        )
+        remaining = gacha_cooldowns[user_id] - now
 
         if remaining > 0:
 
@@ -1635,7 +1673,6 @@ async def gacha(
     gacha_cooldowns[user_id] = now + 10
 
     rolls = amount.value
-
     cost = 300 * rolls
 
     user = get_user(user_id)
@@ -1693,14 +1730,6 @@ async def gacha(
         color=0xF0B85A
     )
 
-    last_card = CARDS[
-        results[-1]
-    ]
-
-    embed.set_image(
-        url=last_card["image"]
-    )
-
     embed.add_field(
         name="💎 Đá đã tiêu",
         value=str(cost),
@@ -1728,9 +1757,37 @@ async def gacha(
         text="Chúc bạn may mắn ở lần quay tiếp theo! ✨"
     )
 
-    await interaction.response.send_message(
-        embed=embed
-    )
+    if rolls == 10:
+
+        grid = create_gacha_grid(results)
+
+        file = discord.File(
+            fp=grid,
+            filename="gacha10.png"
+        )
+
+        embed.set_image(
+            url="attachment://gacha10.png"
+        )
+
+        await interaction.response.send_message(
+            embed=embed,
+            file=file
+        )
+
+    else:
+
+        last_card = CARDS[
+            results[-1]
+        ]
+
+        embed.set_image(
+            url=last_card["image"]
+        )
+
+        await interaction.response.send_message(
+            embed=embed
+        )
 
 # =========================
 # /INVENTORY
