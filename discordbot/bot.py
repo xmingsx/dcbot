@@ -923,7 +923,9 @@ async def gioi_thieu(interaction: discord.Interaction):
             "• /profile\n"
             "• /daily\n"
             "• /play_solo\n"
-            "• /tim_kiem_nhac"
+            "• /tim_kiem_nhac\n"
+            "• /gacha\n"
+            "• /inventory"
         ),
         inline=False
     )
@@ -1513,7 +1515,6 @@ async def daily(interaction: discord.Interaction):
 
 play_solo_cooldowns = {}
 
-```python
 # =========================
 # COOLDOWN /GACHA
 # =========================
