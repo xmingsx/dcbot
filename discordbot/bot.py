@@ -18,37 +18,66 @@ from keep_alive import keep_alive
 # =========================
 
 def create_gacha_grid(results):
-    CARD_WIDTH = 250
-    CARD_HEIGHT = 350
-    COLS = 5
-    ROWS = 2
 
-    images = []
+    CARD_WIDTH = 210
+    CARD_HEIGHT = 148
 
-    for card_key in results:
+    canvas = Image.open(
+        "assets/bggc.png"
+    ).convert("RGBA")
+
+    POSITIONS = [
+        (183, 179),
+        (432, 179),
+        (682, 179),
+        (931, 179),
+        (1180, 179),
+
+        (183, 403),
+        (432, 403),
+        (682, 403),
+        (931, 403),
+        (1180, 403),
+    ]
+
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
+    for index, card_key in enumerate(results):
+
         image_url = CARDS[card_key]["image"]
 
-        response = requests.get(image_url, timeout=10)
+        response = requests.get(
+            image_url,
+            headers=headers,
+            timeout=10
+        )
+
         response.raise_for_status()
 
-        img = Image.open(BytesIO(response.content)).convert("RGBA")
-        img = img.resize((CARD_WIDTH, CARD_HEIGHT))
+        img = Image.open(
+            BytesIO(response.content)
+        ).convert("RGBA")
 
-        images.append(img)
+        img = img.resize(
+            (CARD_WIDTH, CARD_HEIGHT)
+        )
 
-    canvas = Image.new(
-        "RGBA",
-        (CARD_WIDTH * COLS, CARD_HEIGHT * ROWS),
-        (0, 0, 0, 0)
-    )
+        x, y = POSITIONS[index]
 
-    for index, img in enumerate(images):
-        x = (index % COLS) * CARD_WIDTH
-        y = (index // COLS) * CARD_HEIGHT
-        canvas.paste(img, (x, y), img)
+        canvas.paste(
+            img,
+            (x, y)
+        )
 
     output = BytesIO()
-    canvas.save(output, format="PNG")
+
+    canvas.save(
+        output,
+        format="PNG"
+    )
+
     output.seek(0)
 
     return output
