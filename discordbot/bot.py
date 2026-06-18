@@ -1684,6 +1684,8 @@ async def gacha(
         )
         return
 
+    await interaction.response.defer()
+
     user["gems"] -= cost
 
     inventory = get_inventory(user_id)
@@ -1770,7 +1772,7 @@ async def gacha(
             url="attachment://gacha10.png"
         )
 
-        await interaction.response.send_message(
+        await interaction.followup.send(
             embed=embed,
             file=file
         )
@@ -1785,7 +1787,7 @@ async def gacha(
             url=last_card["image"]
         )
 
-        await interaction.response.send_message(
+        await interaction.followup.send(
             embed=embed
         )
 
