@@ -28,7 +28,7 @@ def create_gacha_grid(results):
 
     POSITIONS = [
         # Hàng trên
-        (174, 243),
+        (173, 242),
         (432, 190),
         (682, 190),
         (931, 190),
