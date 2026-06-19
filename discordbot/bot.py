@@ -1821,6 +1821,36 @@ async def gacha(
         )
 
 # =========================
+# /TEST_GACHA
+# =========================
+
+@bot.tree.command(
+    name="test_gacha",
+    description="Test ảnh gacha x10"
+)
+async def test_gacha(
+    interaction: discord.Interaction
+):
+
+    results = [
+        random.choice(
+            list(CARDS.keys())
+        )
+        for _ in range(10)
+    ]
+
+    grid = create_gacha_grid(results)
+
+    file = discord.File(
+        fp=grid,
+        filename="test_gacha.png"
+    )
+
+    await interaction.response.send_message(
+        file=file
+    )
+
+# =========================
 # /INVENTORY
 # =========================
 
