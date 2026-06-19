@@ -23,7 +23,7 @@ def create_gacha_grid(results):
     CARD_HEIGHT = 148
 
     canvas = Image.open(
-        "assets/bggc.png"
+        "discordbot/assets/bggc.png"
     ).convert("RGBA")
 
     POSITIONS = [
