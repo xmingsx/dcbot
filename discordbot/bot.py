@@ -1832,6 +1832,8 @@ async def test_gacha(
     interaction: discord.Interaction
 ):
 
+    await interaction.response.defer()
+
     results = [
         random.choice(
             list(CARDS.keys())
@@ -1846,7 +1848,7 @@ async def test_gacha(
         filename="test_gacha.png"
     )
 
-    await interaction.response.send_message(
+    await interaction.followup.send(
         file=file
     )
 
