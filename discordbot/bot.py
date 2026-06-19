@@ -19,8 +19,8 @@ from keep_alive import keep_alive
 
 def create_gacha_grid(results):
 
-    CARD_WIDTH = 250
-    CARD_HEIGHT = 175
+    CARD_WIDTH = 253
+    CARD_HEIGHT = 176
 
     canvas = Image.open(
         "discordbot/assets/bggc.png"
